@@ -1,11 +1,11 @@
 package classfile
 
 type MemberInfo struct {
-	constantPool ConstantPool
-	accessFlag uint16
-	nameIndex	uint16
+	constantPool    ConstantPool
+	accessFlag      uint16
+	nameIndex       uint16
 	descriptorIndex uint16
-	attributes	[]AttributeInfo
+	attributes      []AttributeInfo
 }
 
 func readMembers(reader *ClassReader, constantPool ConstantPool) []*MemberInfo {
@@ -19,12 +19,10 @@ func readMembers(reader *ClassReader, constantPool ConstantPool) []*MemberInfo {
 
 func readMember(reader *ClassReader, constantPool ConstantPool) *MemberInfo {
 	return &MemberInfo{
-		constantPool: constantPool,
-		accessFlag: reader.readUint16(),
-		nameIndex: reader.readUint16(),
+		constantPool:    constantPool,
+		accessFlag:      reader.readUint16(),
+		nameIndex:       reader.readUint16(),
 		descriptorIndex: reader.readUint16(),
-		attributes: readAttributes(reader, constantPool),
+		attributes:      readAttributes(reader, constantPool),
 	}
 }
-
-

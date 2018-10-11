@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"jvmgo/classpath"
 	"jvmgo/classfile"
+	"jvmgo/classpath"
+	"jvmgo/rtda"
 	"strings"
 )
 
@@ -32,4 +33,10 @@ func startJVM(cmd *Cmd) {
 
 	cf, err := classfile.ParseClassBytes(data)
 	fmt.Println(cf)
+
+	frame := rtda.NewFrame(100, 100)
+	frame.LocalVars().SetDouble(1, 1.234)
+	fmt.Println(frame.LocalVars().GetDouble(1))
+	frame.OperandStack().PushDouble(1.234)
+	fmt.Println(frame.OperandStack().PopDouble())
 }

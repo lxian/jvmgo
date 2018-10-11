@@ -13,7 +13,7 @@ func (utf8Info *ConstantUtf8Info) readInfo(reader *ClassReader) {
 // String
 type ConstantStringInfo struct {
 	constantPool ConstantPool
-	utf8Index uint16
+	utf8Index    uint16
 }
 
 func (stringInfo *ConstantStringInfo) readInfo(reader *ClassReader) {
@@ -23,5 +23,3 @@ func (stringInfo *ConstantStringInfo) readInfo(reader *ClassReader) {
 func (stringInfo *ConstantStringInfo) String() string {
 	return stringInfo.constantPool.getUtf8String(stringInfo.utf8Index)
 }
-
-

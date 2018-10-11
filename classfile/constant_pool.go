@@ -11,8 +11,10 @@ func readConstantPool(reader *ClassReader) ConstantPool {
 		constantPool[i] = readConstantInfo(reader, constantPool)
 
 		switch constantPool[i].(type) {
-		case *ConstantLongInfo, *ConstantDoubleInfo: i += 2
-		default: i += 1
+		case *ConstantLongInfo, *ConstantDoubleInfo:
+			i += 2
+		default:
+			i += 1
 		}
 	}
 	return constantPool
@@ -26,14 +28,14 @@ func (constantPool ConstantPool) getConstantInfo(index uint16) ConstantInfo {
 }
 
 func (constantPool ConstantPool) getUtf8String(index uint16) string {
-	return constantPool.getConstantInfo(index).(* ConstantUtf8Info).value
+	return constantPool.getConstantInfo(index).(*ConstantUtf8Info).value
 }
 
 func (constantPool ConstantPool) getClassName(index uint16) string {
-	return constantPool.getConstantInfo(index).(* ConstantClassInfo).Name()
+	return constantPool.getConstantInfo(index).(*ConstantClassInfo).Name()
 }
 
 func (constantPool ConstantPool) getNameAndType(index uint16) (string, string) {
-	nameAndType := constantPool.getConstantInfo(index).(* ConstantNameAndType)
+	nameAndType := constantPool.getConstantInfo(index).(*ConstantNameAndType)
 	return constantPool.getUtf8String(nameAndType.nameIndex), constantPool.getUtf8String(nameAndType.descriptorIndex)
 }

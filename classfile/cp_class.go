@@ -2,7 +2,7 @@ package classfile
 
 type ConstantClassInfo struct {
 	constantPool ConstantPool
-	nameIndex uint16
+	nameIndex    uint16
 }
 
 func (classInfo *ConstantClassInfo) readInfo(reader *ClassReader) {
@@ -12,4 +12,3 @@ func (classInfo *ConstantClassInfo) readInfo(reader *ClassReader) {
 func (classInfo *ConstantClassInfo) Name() string {
 	return classInfo.constantPool.getUtf8String(classInfo.nameIndex)
 }
-

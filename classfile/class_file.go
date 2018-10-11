@@ -6,16 +6,16 @@ import (
 
 type ClassFile struct {
 	// magic uint32
-	minorVersion	uint16
-	majorVersion	uint16
-	constantPool	ConstantPool
-	accessFlags		uint16
-	thisClassIndex	uint16
-	superClassIndex	uint16
-	interfaces		[]uint16
-	fields			[]*MemberInfo
-	methods			[]*MemberInfo
-	attributes		[]AttributeInfo
+	minorVersion    uint16
+	majorVersion    uint16
+	constantPool    ConstantPool
+	accessFlags     uint16
+	thisClassIndex  uint16
+	superClassIndex uint16
+	interfaces      []uint16
+	fields          []*MemberInfo
+	methods         []*MemberInfo
+	attributes      []AttributeInfo
 }
 
 func ParseClassBytes(classFileBytes []byte) (classFile *ClassFile, err error) {
@@ -42,7 +42,6 @@ func (classFile *ClassFile) Read(reader *ClassReader) {
 	classFile.methods = readMembers(reader, classFile.constantPool)
 	classFile.attributes = readAttributes(reader, classFile.constantPool)
 }
-
 
 func (classFile *ClassFile) readClassInfo(reader *ClassReader) {
 	classFile.accessFlags = reader.readUint16()
@@ -75,4 +74,3 @@ func validateVersion(major uint16, minor uint16) {
 	}
 	panic(fmt.Sprintf("Unsupported class file version %d.%d. Supported versoins: 45.x, 46.0-52.0", major, minor))
 }
-
