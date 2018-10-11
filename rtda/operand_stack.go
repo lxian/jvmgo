@@ -13,6 +13,21 @@ func newOperandStack(maxOperandStackSize uint) *OperandStack {
 	return &OperandStack{size:0, operands:make([]Slot, maxOperandStackSize),}
 }
 
+// Slot
+func (stack *OperandStack) PeekSlot() Slot {
+	return stack.operands[stack.size];
+}
+
+func (stack *OperandStack) PushSlot(slot Slot) {
+	stack.operands[stack.size] = slot
+	stack.size += 1
+}
+
+func (stack *OperandStack) PopSlot() Slot {
+	stack.size -= 1
+	return stack.operands[stack.size]
+}
+
 // Int
 func (stack *OperandStack) PushInt(value int32) {
 	stack.operands[stack.size].num = value
@@ -64,5 +79,7 @@ func (stack *OperandStack) PushRef(ref *Object) {
 
 func (stack *OperandStack) PopRef() *Object {
 	stack.size -= 1
-	return stack.operands[stack.size].ref
+	val := stack.operands[stack.size].ref
+	stack.operands[stack.size].ref = nil
+	return val
 }
