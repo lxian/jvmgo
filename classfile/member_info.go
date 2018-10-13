@@ -26,3 +26,14 @@ func readMember(reader *ClassReader, constantPool ConstantPool) *MemberInfo {
 		attributes:      readAttributes(reader, constantPool),
 	}
 }
+
+func (memInfo *MemberInfo) FindCodeAttribute() *CodeAttribute {
+	for _, attrInfo := range memInfo.attributes {
+		switch attrInfo.(type) {
+		case CodeAttribute:
+			return attrInfo.(*CodeAttribute)
+		}
+	}
+	return nil
+}
+

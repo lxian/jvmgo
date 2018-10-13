@@ -37,3 +37,15 @@ func (attr *CodeAttribute) readInfo(reader *ClassReader) {
 
 	attr.attributes = readAttributes(reader, attr.constantPool)
 }
+
+func (attr *CodeAttribute) MaxLocals() uint16 {
+	return attr.maxLocals
+}
+
+func (attr *CodeAttribute) MaxStack() uint16 {
+	return attr.maxStack
+}
+
+func (attr *CodeAttribute) Code() []byte {
+	return attr.code
+}

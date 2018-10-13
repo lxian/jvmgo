@@ -23,22 +23,14 @@ func (*ishl) Execute(frame *rtda.Frame) {
 func (*ishr) Execute(frame *rtda.Frame) {
 	v2 := shiftBitsCnt(frame)
 	v1 := frame.OperandStack().PopInt()
-
-	shifted := v1 >> v2
-
-	if (v1 & 0x80000000 > 0) { // first bit is 1
-		var extendedSignBits int32 = 0xffffffff << (32 - v2)
-		shifted = shifted | extendedSignBits
-	}
-
-	frame.OperandStack().PushInt(shifted)
+	frame.OperandStack().PushInt(v1 >> v2)
 }
 
 func (*iushr) Execute(frame *rtda.Frame) {
 	v2 := shiftBitsCnt(frame)
 	v1 := frame.OperandStack().PopInt()
-	shifted := v1 >> v2
-	frame.OperandStack().PushInt(shifted)
+	shifted := uint32(v1) >> v2
+	frame.OperandStack().PushInt(int32(shifted))
 }
 
 type lshl struct { instruction.NoOperandsInstruction }
@@ -55,20 +47,12 @@ func (*lshl) Execute(frame *rtda.Frame) {
 func (*lshr) Execute(frame *rtda.Frame) {
 	v2 := shiftBitsCnt(frame)
 	v1 := frame.OperandStack().PopLong()
-
-	shifted := v1 >> v2
-
-	if (v1 & 0x80000000 > 0) { // first bit is 1
-		var extendedSignBits int64 = 0xffffffffffffffff << (64 - v2)
-		shifted = shifted | extendedSignBits
-	}
-
-	frame.OperandStack().PushLong(shifted)
+	frame.OperandStack().PushLong(v1 >> v2)
 }
 
 func (*lushr) Execute(frame *rtda.Frame) {
 	v2 := shiftBitsCnt(frame)
 	v1 := frame.OperandStack().PopLong()
-	shifted := v1 >> v2
-	frame.OperandStack().PushLong(shifted)
+	shifted := uint64(v1) >> v2
+	frame.OperandStack().PushLong(int64(shifted))
 }
