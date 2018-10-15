@@ -28,6 +28,10 @@ func (frame *Frame) Thread() *Thread {
 	return frame.thread
 }
 
-func (frame *Frame) SetNextPC(nextPC int) *Thread {
+func (frame *Frame) NextPC() int {
+	return frame.nextPC
+}
+
+func (frame *Frame) SetNextPC(nextPC int) {
 	frame.nextPC = nextPC
 }

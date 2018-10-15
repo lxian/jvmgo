@@ -40,6 +40,11 @@ func (reader *ByteCodeReader) ReadInt32s() {
 }
 
 func (reader *ByteCodeReader) SkipPadding() {
+	for reader.pc % 4 != 0 {
+		reader.ReadUint8()
+	}
 }
 
-
+func (reader *ByteCodeReader) PC() int {
+	return reader.pc
+}
