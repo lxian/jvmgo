@@ -5,7 +5,9 @@ import (
 	"jvmgo/rtda"
 )
 
-type LCMP struct { instruction.NoOperandsInstruction }
+type LCMP struct {
+	instruction.NoOperandsInstruction
+}
 
 func (*LCMP) Execute(frame *rtda.Frame) {
 	v2 := frame.OperandStack().PopLong()
@@ -19,8 +21,12 @@ func (*LCMP) Execute(frame *rtda.Frame) {
 	}
 }
 
-type FCMPG struct { instruction.NoOperandsInstruction }
-type FCMPL struct { instruction.NoOperandsInstruction }
+type FCMPG struct {
+	instruction.NoOperandsInstruction
+}
+type FCMPL struct {
+	instruction.NoOperandsInstruction
+}
 
 func (*FCMPG) Execute(frame *rtda.Frame) {
 	_fcmp(frame, true)
@@ -46,8 +52,12 @@ func _fcmp(frame *rtda.Frame, gFlag bool) {
 	}
 }
 
-type DCMPG struct { instruction.NoOperandsInstruction }
-type DCMPL struct { instruction.NoOperandsInstruction }
+type DCMPG struct {
+	instruction.NoOperandsInstruction
+}
+type DCMPL struct {
+	instruction.NoOperandsInstruction
+}
 
 func (*DCMPG) Execute(frame *rtda.Frame) {
 	_dcmp(frame, true)
@@ -72,5 +82,3 @@ func _dcmp(frame *rtda.Frame, gFlag bool) {
 		frame.OperandStack().PushInt(-1)
 	}
 }
-
-

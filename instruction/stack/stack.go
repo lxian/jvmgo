@@ -1,14 +1,18 @@
 package stack
 
 import (
+	"github.com/derekparker/delve/pkg/dwarf/frame"
 	"jvmgo/instruction"
 	"jvmgo/rtda"
-	"github.com/derekparker/delve/pkg/dwarf/frame"
 )
 
 // POP
-type POP struct { instruction.NoOperandsInstruction }
-type POP2 struct { instruction.NoOperandsInstruction }
+type POP struct {
+	instruction.NoOperandsInstruction
+}
+type POP2 struct {
+	instruction.NoOperandsInstruction
+}
 
 func (*POP) Execute(frame *rtda.Frame) {
 	frame.OperandStack().PopSlot()
@@ -20,10 +24,15 @@ func (*POP2) Execute(frame *rtda.Frame) {
 }
 
 // DUP
-type DUP struct { instruction.NoOperandsInstruction }
-type DUP_X1 struct { instruction.NoOperandsInstruction }
-type DUP_X2 struct { instruction.NoOperandsInstruction }
-
+type DUP struct {
+	instruction.NoOperandsInstruction
+}
+type DUP_X1 struct {
+	instruction.NoOperandsInstruction
+}
+type DUP_X2 struct {
+	instruction.NoOperandsInstruction
+}
 
 func (*DUP) Execute(frame *rtda.Frame) {
 	slot := frame.OperandStack().PeekSlot()
@@ -48,9 +57,15 @@ func (*DUP_X2) Execute(frame *rtda.Frame) {
 	frame.OperandStack().PushSlot(slotToDup)
 }
 
-type DUP2 struct { instruction.NoOperandsInstruction }
-type DUP2_X1 struct { instruction.NoOperandsInstruction }
-type DUP2_X2 struct { instruction.NoOperandsInstruction }
+type DUP2 struct {
+	instruction.NoOperandsInstruction
+}
+type DUP2_X1 struct {
+	instruction.NoOperandsInstruction
+}
+type DUP2_X2 struct {
+	instruction.NoOperandsInstruction
+}
 
 func (*DUP2) Execute(frame *rtda.Frame) {
 	slot_h := frame.OperandStack().PopSlot()
@@ -86,7 +101,9 @@ func (*DUP2_X2) Execute(frame *rtda.Frame) {
 }
 
 // Swap
-type SWAP struct { instruction.NoOperandsInstruction }
+type SWAP struct {
+	instruction.NoOperandsInstruction
+}
 
 func (*SWAP) Execute(frame *rtda.Frame) {
 	slot_1 := frame.OperandStack().PopSlot()
@@ -94,4 +111,3 @@ func (*SWAP) Execute(frame *rtda.Frame) {
 	frame.OperandStack().PushSlot(slot_1)
 	frame.OperandStack().PushSlot(slot_2)
 }
-

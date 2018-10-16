@@ -1,14 +1,14 @@
 package extended
 
 import (
-	"jvmgo/rtda"
-	"jvmgo/instruction"
 	"fmt"
+	"jvmgo/instruction"
+	"jvmgo/rtda"
 )
 
 type WIDE struct {
-	opcode uint8
-	index uint16
+	opcode     uint8
+	index      uint16
 	constValue int16
 }
 
@@ -51,5 +51,3 @@ func (wide *WIDE) Execute(frame *rtda.Frame) {
 		fmt.Print("wide ret")
 	}
 }
-
-

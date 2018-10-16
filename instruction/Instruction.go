@@ -8,7 +8,7 @@ type Instruction interface {
 }
 
 // NOP
-type NoOperandsInstruction struct { }
+type NoOperandsInstruction struct{}
 
 func (nopInst *NoOperandsInstruction) FetchOperands(reader *ByteCodeReader) {
 }
@@ -39,6 +39,3 @@ type Index16Instruction struct {
 func (inst *Index16Instruction) FetchOperands(reader *ByteCodeReader) {
 	inst.Index = uint(reader.ReadUint16())
 }
-
-
-

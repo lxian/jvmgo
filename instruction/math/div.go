@@ -5,7 +5,9 @@ import (
 	"jvmgo/rtda"
 )
 
-type IDIV struct { instruction.NoOperandsInstruction }
+type IDIV struct {
+	instruction.NoOperandsInstruction
+}
 
 func (*IDIV) Execute(frame *rtda.Frame) {
 	v2 := frame.OperandStack().PopInt()
@@ -16,7 +18,9 @@ func (*IDIV) Execute(frame *rtda.Frame) {
 	frame.OperandStack().PushInt(v1 / v2)
 }
 
-type LDIV struct { instruction.NoOperandsInstruction }
+type LDIV struct {
+	instruction.NoOperandsInstruction
+}
 
 func (*LDIV) Execute(frame *rtda.Frame) {
 	v2 := frame.OperandStack().PopLong()
@@ -27,7 +31,9 @@ func (*LDIV) Execute(frame *rtda.Frame) {
 	frame.OperandStack().PushLong(v1 / v2)
 }
 
-type FDIV struct { instruction.NoOperandsInstruction }
+type FDIV struct {
+	instruction.NoOperandsInstruction
+}
 
 func (*FDIV) Execute(frame *rtda.Frame) {
 	v2 := frame.OperandStack().PopFloat()
@@ -38,7 +44,9 @@ func (*FDIV) Execute(frame *rtda.Frame) {
 	frame.OperandStack().PushFloat(v1 / v2)
 }
 
-type DDIV struct { instruction.NoOperandsInstruction }
+type DDIV struct {
+	instruction.NoOperandsInstruction
+}
 
 func (*DDIV) Execute(frame *rtda.Frame) {
 	v2 := frame.OperandStack().PopDouble()
@@ -48,4 +56,3 @@ func (*DDIV) Execute(frame *rtda.Frame) {
 	}
 	frame.OperandStack().PushDouble(v1 / v2)
 }
-

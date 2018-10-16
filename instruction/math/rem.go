@@ -6,7 +6,9 @@ import (
 	"math"
 )
 
-type IREM struct { instruction.NoOperandsInstruction }
+type IREM struct {
+	instruction.NoOperandsInstruction
+}
 
 func (*IREM) Execute(frame *rtda.Frame) {
 	v2 := frame.OperandStack().PopInt()
@@ -17,7 +19,9 @@ func (*IREM) Execute(frame *rtda.Frame) {
 	frame.OperandStack().PushInt(v1 % v2)
 }
 
-type LREM struct { instruction.NoOperandsInstruction }
+type LREM struct {
+	instruction.NoOperandsInstruction
+}
 
 func (*LREM) Execute(frame *rtda.Frame) {
 	v2 := frame.OperandStack().PopLong()
@@ -28,7 +32,9 @@ func (*LREM) Execute(frame *rtda.Frame) {
 	frame.OperandStack().PushLong(v1 % v2)
 }
 
-type FREM struct { instruction.NoOperandsInstruction }
+type FREM struct {
+	instruction.NoOperandsInstruction
+}
 
 func (*FREM) Execute(frame *rtda.Frame) {
 	v2 := frame.OperandStack().PopFloat()
@@ -36,11 +42,12 @@ func (*FREM) Execute(frame *rtda.Frame) {
 	frame.OperandStack().PushFloat(float32(math.Mod(float64(v1), float64(v2))))
 }
 
-type DREM struct { instruction.NoOperandsInstruction }
+type DREM struct {
+	instruction.NoOperandsInstruction
+}
 
 func (*DREM) Execute(frame *rtda.Frame) {
 	v2 := frame.OperandStack().PopDouble()
 	v1 := frame.OperandStack().PopDouble()
 	frame.OperandStack().PushDouble(math.Mod(v1, v2))
 }
-

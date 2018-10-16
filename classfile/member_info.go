@@ -30,10 +30,9 @@ func readMember(reader *ClassReader, constantPool ConstantPool) *MemberInfo {
 func (memInfo *MemberInfo) FindCodeAttribute() *CodeAttribute {
 	for _, attrInfo := range memInfo.attributes {
 		switch attrInfo.(type) {
-		case CodeAttribute:
+		case *CodeAttribute:
 			return attrInfo.(*CodeAttribute)
 		}
 	}
 	return nil
 }
-

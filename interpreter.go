@@ -1,10 +1,10 @@
 package main
 
 import (
-	"jvmgo/classfile"
-	"jvmgo/rtda"
-	"jvmgo/instruction"
 	"fmt"
+	"jvmgo/classfile"
+	"jvmgo/instruction"
+	"jvmgo/rtda"
 )
 
 func interpret(methodInfo *classfile.MemberInfo) {

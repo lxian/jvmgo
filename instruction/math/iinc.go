@@ -6,7 +6,7 @@ import (
 )
 
 type IINC struct {
-	index uint8
+	index      uint8
 	constValue int32
 }
 

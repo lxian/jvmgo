@@ -10,12 +10,12 @@ type OperandStack struct {
 }
 
 func newOperandStack(maxOperandStackSize uint) *OperandStack {
-	return &OperandStack{size:0, operands:make([]Slot, maxOperandStackSize),}
+	return &OperandStack{size: 0, operands: make([]Slot, maxOperandStackSize)}
 }
 
 // Slot
 func (stack *OperandStack) PeekSlot() Slot {
-	return stack.operands[stack.size];
+	return stack.operands[stack.size]
 }
 
 func (stack *OperandStack) PushSlot(slot Slot) {
@@ -52,14 +52,14 @@ func (stack *OperandStack) PopFloat() float32 {
 
 // Long
 func (stack *OperandStack) PushLong(value int64) {
-	stack.PushInt(int32(value)) // lower
+	stack.PushInt(int32(value))       // lower
 	stack.PushInt(int32(value >> 32)) // higher
 }
 
 func (stack *OperandStack) PopLong() int64 {
 	higher := stack.PopInt()
 	lower := stack.PopInt()
-	return int64(higher) << 32 | (int64(lower) & 0x00000000FFFFFFFF)
+	return int64(higher)<<32 | (int64(lower) & 0x00000000FFFFFFFF)
 }
 
 // Double

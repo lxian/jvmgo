@@ -18,8 +18,8 @@ func (inst *iFACMP) Execute(frame *rtda.Frame) {
 	}
 }
 
-type IF_ACMPEQ struct { iFACMP }
-type IF_ACMPNE struct { iFACMP }
+type IF_ACMPEQ struct{ iFACMP }
+type IF_ACMPNE struct{ iFACMP }
 
 func NewIFACMPEQ() *IF_ACMPEQ {
 	return &IF_ACMPEQ{iFACMP{shouldBranch: func(v1 *rtda.Object, v2 *rtda.Object) bool {

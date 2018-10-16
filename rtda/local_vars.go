@@ -5,7 +5,7 @@ import "math"
 type LocalVars []Slot
 
 func newLocalVars(maxLocalVarSize uint) LocalVars {
-	return make([] Slot, maxLocalVarSize)
+	return make([]Slot, maxLocalVarSize)
 }
 
 // Int
@@ -29,14 +29,14 @@ func (locals LocalVars) GetFloat(index uint) float32 {
 
 // Long
 func (locals LocalVars) SetLong(index uint, value int64) {
-	locals[index].num = int32(value) // lower bits
+	locals[index].num = int32(value)         // lower bits
 	locals[index+1].num = int32(value >> 32) // higher bits
 }
 
 func (locals LocalVars) GetLong(index uint) int64 {
 	lower := locals[index].num
 	higher := locals[index+1].num
-	return int64(higher) << 32 | (int64(lower) & 0x00000000FFFFFFFF)
+	return int64(higher)<<32 | (int64(lower) & 0x00000000FFFFFFFF)
 }
 
 // Double
@@ -57,4 +57,3 @@ func (locals LocalVars) SetRef(index uint, ref *Object) {
 func (locals LocalVars) GetRef(index uint) *Object {
 	return locals[index].ref
 }
-

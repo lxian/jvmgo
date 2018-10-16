@@ -5,9 +5,15 @@ import (
 	"jvmgo/rtda"
 )
 
-type D2F struct { instruction.NoOperandsInstruction }
-type D2L struct { instruction.NoOperandsInstruction }
-type D2I struct { instruction.NoOperandsInstruction }
+type D2F struct {
+	instruction.NoOperandsInstruction
+}
+type D2L struct {
+	instruction.NoOperandsInstruction
+}
+type D2I struct {
+	instruction.NoOperandsInstruction
+}
 
 func (*D2F) Execute(frame *rtda.Frame) {
 	v := frame.OperandStack().PopDouble()
@@ -23,4 +29,3 @@ func (*D2I) Execute(frame *rtda.Frame) {
 	v := frame.OperandStack().PopDouble()
 	frame.OperandStack().PushInt(int32(v))
 }
-

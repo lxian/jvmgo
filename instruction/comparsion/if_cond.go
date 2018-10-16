@@ -3,15 +3,14 @@ package comparsion
 import (
 	"jvmgo/instruction"
 	"jvmgo/rtda"
-	"github.com/derekparker/delve/pkg/dwarf/frame"
 )
 
-type IFEQ struct { instruction.Index16Instruction }
-type IFNE struct { instruction.Index16Instruction }
-type IFLT struct { instruction.Index16Instruction }
-type IFGE struct { instruction.Index16Instruction }
-type IFGT struct { instruction.Index16Instruction }
-type IFLE struct { instruction.Index16Instruction }
+type IFEQ struct{ instruction.Index16Instruction }
+type IFNE struct{ instruction.Index16Instruction }
+type IFLT struct{ instruction.Index16Instruction }
+type IFGE struct{ instruction.Index16Instruction }
+type IFGT struct{ instruction.Index16Instruction }
+type IFLE struct{ instruction.Index16Instruction }
 
 func (inst *IFEQ) Execute(frame *rtda.Frame) {
 	v := frame.OperandStack().PopInt()
@@ -54,4 +53,3 @@ func (inst *IFLE) Execute(frame *rtda.Frame) {
 		instruction.Branch(frame, int(inst.Index))
 	}
 }
-

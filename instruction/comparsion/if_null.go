@@ -5,7 +5,7 @@ import (
 	"jvmgo/rtda"
 )
 
-type IFNONNULL struct { instruction.Index16Instruction }
+type IFNONNULL struct{ instruction.Index16Instruction }
 
 func (inst *IFNONNULL) Execute(frame *rtda.Frame) {
 	if frame.OperandStack().PopRef() != nil {
@@ -13,7 +13,7 @@ func (inst *IFNONNULL) Execute(frame *rtda.Frame) {
 	}
 }
 
-type IFNULL struct { instruction.Index16Instruction }
+type IFNULL struct{ instruction.Index16Instruction }
 
 func (inst *IFNULL) Execute(frame *rtda.Frame) {
 	if frame.OperandStack().PopRef() == nil {
