@@ -4,8 +4,6 @@ import (
 	"jvmgo/rtda"
 	"jvmgo/instruction"
 	"fmt"
-	"github.com/derekparker/delve/pkg/dwarf/reader"
-	"github.com/derekparker/delve/pkg/dwarf/frame"
 )
 
 type WIDE struct {

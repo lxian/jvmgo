@@ -6,49 +6,49 @@ import (
 	"github.com/derekparker/delve/pkg/dwarf/frame"
 )
 
-type ifeq struct { instruction.Index16Instruction }
-type ifne struct { instruction.Index16Instruction }
-type iflt struct { instruction.Index16Instruction }
-type ifge struct { instruction.Index16Instruction }
-type ifgt struct { instruction.Index16Instruction }
-type ifle struct { instruction.Index16Instruction }
+type IFEQ struct { instruction.Index16Instruction }
+type IFNE struct { instruction.Index16Instruction }
+type IFLT struct { instruction.Index16Instruction }
+type IFGE struct { instruction.Index16Instruction }
+type IFGT struct { instruction.Index16Instruction }
+type IFLE struct { instruction.Index16Instruction }
 
-func (inst *ifeq) Execute(frame *rtda.Frame) {
+func (inst *IFEQ) Execute(frame *rtda.Frame) {
 	v := frame.OperandStack().PopInt()
 	if v == 0 {
 		instruction.Branch(frame, int(inst.Index))
 	}
 }
 
-func (inst *ifne) Execute(frame *rtda.Frame) {
+func (inst *IFNE) Execute(frame *rtda.Frame) {
 	v := frame.OperandStack().PopInt()
 	if v != 0 {
 		instruction.Branch(frame, int(inst.Index))
 	}
 }
 
-func (inst *iflt) Execute(frame *rtda.Frame) {
+func (inst *IFLT) Execute(frame *rtda.Frame) {
 	v := frame.OperandStack().PopInt()
 	if v < 0 {
 		instruction.Branch(frame, int(inst.Index))
 	}
 }
 
-func (inst *ifge) Execute(frame *rtda.Frame) {
+func (inst *IFGE) Execute(frame *rtda.Frame) {
 	v := frame.OperandStack().PopInt()
 	if v >= 0 {
 		instruction.Branch(frame, int(inst.Index))
 	}
 }
 
-func (inst *ifgt) Execute(frame *rtda.Frame) {
+func (inst *IFGT) Execute(frame *rtda.Frame) {
 	v := frame.OperandStack().PopInt()
 	if v > 0 {
 		instruction.Branch(frame, int(inst.Index))
 	}
 }
 
-func (inst *ifle) Execute(frame *rtda.Frame) {
+func (inst *IFLE) Execute(frame *rtda.Frame) {
 	v := frame.OperandStack().PopInt()
 	if v <= 0 {
 		instruction.Branch(frame, int(inst.Index))

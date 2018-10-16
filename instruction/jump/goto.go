@@ -11,9 +11,9 @@ func (inst *GOTO) Execute(frame *rtda.Frame) {
 	instruction.Branch(frame, int(inst.Index))
 }
 
-type GOTOW struct { index uint32 }
+type GOTO_W struct { index uint32 }
 
-func (inst *GOTOW) FetchOperands(reader *instruction.ByteCodeReader) {
+func (inst *GOTO_W) FetchOperands(reader *instruction.ByteCodeReader) {
 	b1 := reader.ReadUint8()
 	b2 := reader.ReadUint8()
 	b3 := reader.ReadUint8()
@@ -21,6 +21,6 @@ func (inst *GOTOW) FetchOperands(reader *instruction.ByteCodeReader) {
 	inst.index = uint32(b1) << 24 | uint32(b2) << 16 | uint32(b3) << 8 | uint32(b4)
 }
 
-func (inst *GOTOW) Execute(frame *rtda.Frame) {
+func (inst *GOTO_W) Execute(frame *rtda.Frame) {
 	instruction.Branch(frame, int(inst.index))
 }
