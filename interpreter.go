@@ -5,6 +5,7 @@ import (
 	"jvmgo/classfile"
 	"jvmgo/instruction"
 	"jvmgo/rtda"
+	"jvmgo/instruction/factory"
 )
 
 func interpret(methodInfo *classfile.MemberInfo) {
@@ -19,8 +20,8 @@ func interpret(methodInfo *classfile.MemberInfo) {
 
 	defer func(frame2 *rtda.Frame) {
 		if r := recover(); r != nil {
-			fmt.Printf("LocalVars: $v\n", frame.LocalVars())
-			fmt.Printf("OperandStack: $v\n", frame.OperandStack())
+			fmt.Printf("LocalVars: %v\n", frame.LocalVars())
+			fmt.Printf("OperandStack: %v\n", frame.OperandStack())
 			panic(r)
 		}
 	}(frame)
@@ -37,15 +38,17 @@ func loop(thread *rtda.Thread, bytecode []byte) {
 
 		reader.Reset(bytecode, pc)
 		opcode := reader.ReadUint8()
-		instruction := NewInstruction(opcode)
+		instruction := factory.NewInstruction(opcode)
 		instruction.FetchOperands(reader)
 		frame.SetNextPC(reader.PC())
 
-		fmt.Println("pc: %2d inst: %T %v\n", pc, instruction, instruction)
+		fmt.Printf("pc: %2d inst: %T %v \n", pc, instruction, instruction);
+		fmt.Printf("Locals: %v\n", frame.LocalVars())
+		fmt.Printf("Stack: %v\n", frame.OperandStack())
 		instruction.Execute(frame)
+		fmt.Printf(">Locals: %v\n", frame.LocalVars())
+		fmt.Printf(">Stack: %v\n", frame.OperandStack())
+		fmt.Println("-----------")
 	}
 }
 
-func NewInstruction(opcode byte) instruction.Instruction {
-	return nil
-}

@@ -27,6 +27,14 @@ func readMember(reader *ClassReader, constantPool ConstantPool) *MemberInfo {
 	}
 }
 
+func (memInfo *MemberInfo) Name() string {
+	return memInfo.constantPool.getUtf8String(memInfo.nameIndex)
+}
+
+func (memInfo *MemberInfo) Descriptor() string {
+	return memInfo.constantPool.getUtf8String(memInfo.descriptorIndex)
+}
+
 func (memInfo *MemberInfo) FindCodeAttribute() *CodeAttribute {
 	for _, attrInfo := range memInfo.attributes {
 		switch attrInfo.(type) {

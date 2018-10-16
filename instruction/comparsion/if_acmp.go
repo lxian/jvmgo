@@ -6,7 +6,7 @@ import (
 )
 
 type iFACMP struct {
-	instruction.Index16Instruction
+	instruction.BranchInstruction
 	shouldBranch func(v1 *rtda.Object, v2 *rtda.Object) bool
 }
 
@@ -14,7 +14,7 @@ func (inst *iFACMP) Execute(frame *rtda.Frame) {
 	v2 := frame.OperandStack().PopRef()
 	v1 := frame.OperandStack().PopRef()
 	if inst.shouldBranch(v1, v2) {
-		instruction.Branch(frame, int(inst.Index))
+		instruction.Branch(frame, int(inst.Offset))
 	}
 }
 

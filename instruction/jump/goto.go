@@ -5,10 +5,10 @@ import (
 	"jvmgo/rtda"
 )
 
-type GOTO struct{ instruction.Index16Instruction }
+type GOTO struct{ instruction.BranchInstruction }
 
 func (inst *GOTO) Execute(frame *rtda.Frame) {
-	instruction.Branch(frame, int(inst.Index))
+	instruction.Branch(frame, int(inst.Offset))
 }
 
 type GOTO_W struct{ index uint32 }

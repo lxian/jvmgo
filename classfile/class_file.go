@@ -74,3 +74,7 @@ func validateVersion(major uint16, minor uint16) {
 	}
 	panic(fmt.Sprintf("Unsupported class file version %d.%d. Supported versoins: 45.x, 46.0-52.0", major, minor))
 }
+
+func (classFile *ClassFile) Methods() []*MemberInfo {
+	return classFile.methods
+}

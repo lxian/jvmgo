@@ -167,7 +167,7 @@ var (
 	//invoke_native = &INVOKE_NATIVE{}
 )
 
-func newInstruction(opcode byte) Instruction {
+func NewInstruction(opcode byte) Instruction {
 	switch opcode {
 	case 0x00:
 		return nop
@@ -488,21 +488,21 @@ func newInstruction(opcode byte) Instruction {
 	case 0x9e:
 		return &IFLE{}
 	case 0x9f:
-		return &IF_ICMPEQ{}
+		return NewIFICMPEQ()
 	case 0xa0:
-		return &IF_ICMPNE{}
+		return NewIFICMPNE()
 	case 0xa1:
-		return &IF_ICMPLT{}
+		return NewIFICMPLT()
 	case 0xa2:
-		return &IF_ICMPGE{}
+		return NewIFICMPGE()
 	case 0xa3:
-		return &IF_ICMPGT{}
+		return NewIFICMPGT()
 	case 0xa4:
-		return &IF_ICMPLE{}
+		return NewIFICMPLE()
 	case 0xa5:
-		return &IF_ACMPEQ{}
+		return NewIFACMPEQ()
 	case 0xa6:
-		return &IF_ACMPNE{}
+		return NewIFACMPNE()
 	case 0xa7:
 		return &GOTO{}
 	//case 0xa8:
