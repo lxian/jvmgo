@@ -6,7 +6,7 @@ type Thread struct {
 }
 
 func NewThread() *Thread {
-	return &Thread{stack:newStack(1024)}
+	return &Thread{stack: newStack(1024)}
 }
 
 func (thread *Thread) PC() int {

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"jvmgo/classfile"
 	"jvmgo/instruction"
-	"jvmgo/rtda"
 	"jvmgo/instruction/factory"
+	"jvmgo/rtda"
 )
 
 func interpret(methodInfo *classfile.MemberInfo) {
@@ -42,7 +42,7 @@ func loop(thread *rtda.Thread, bytecode []byte) {
 		instruction.FetchOperands(reader)
 		frame.SetNextPC(reader.PC())
 
-		fmt.Printf("pc: %2d inst: %T %v \n", pc, instruction, instruction);
+		fmt.Printf("pc: %2d inst: %T %v \n", pc, instruction, instruction)
 		fmt.Printf("Locals: %v\n", frame.LocalVars())
 		fmt.Printf("Stack: %v\n", frame.OperandStack())
 		instruction.Execute(frame)
@@ -51,4 +51,3 @@ func loop(thread *rtda.Thread, bytecode []byte) {
 		fmt.Println("-----------")
 	}
 }
-

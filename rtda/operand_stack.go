@@ -1,6 +1,7 @@
 package rtda
 
 import (
+	. "jvmgo/rtda/heap"
 	"math"
 )
 

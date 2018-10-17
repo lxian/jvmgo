@@ -3,11 +3,12 @@ package comparsion
 import (
 	"jvmgo/instruction"
 	"jvmgo/rtda"
+	. "jvmgo/rtda/heap"
 )
 
 type iFACMP struct {
 	instruction.BranchInstruction
-	shouldBranch func(v1 *rtda.Object, v2 *rtda.Object) bool
+	shouldBranch func(v1 *Object, v2 *Object) bool
 }
 
 func (inst *iFACMP) Execute(frame *rtda.Frame) {
@@ -22,13 +23,13 @@ type IF_ACMPEQ struct{ iFACMP }
 type IF_ACMPNE struct{ iFACMP }
 
 func NewIFACMPEQ() *IF_ACMPEQ {
-	return &IF_ACMPEQ{iFACMP{shouldBranch: func(v1 *rtda.Object, v2 *rtda.Object) bool {
+	return &IF_ACMPEQ{iFACMP{shouldBranch: func(v1 *Object, v2 *Object) bool {
 		return v1 == v2
 	}}}
 }
 
 func NewIFACMPNE() *IF_ACMPNE {
-	return &IF_ACMPNE{iFACMP{shouldBranch: func(v1 *rtda.Object, v2 *rtda.Object) bool {
+	return &IF_ACMPNE{iFACMP{shouldBranch: func(v1 *Object, v2 *Object) bool {
 		return v1 != v2
 	}}}
 }
