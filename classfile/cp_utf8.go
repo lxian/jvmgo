@@ -10,6 +10,10 @@ func (utf8Info *ConstantUtf8Info) readInfo(reader *ClassReader) {
 	utf8Info.value = string(reader.readBytes(length))
 }
 
+func (utf8Info *ConstantUtf8Info) Value() string {
+	return utf8Info.value
+}
+
 // String
 type ConstantStringInfo struct {
 	constantPool ConstantPool

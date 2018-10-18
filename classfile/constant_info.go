@@ -30,12 +30,12 @@ func readConstantInfo(reader *ClassReader, constantPool ConstantPool) ConstantIn
 
 func newConstantInfo(flag uint8, constantPool ConstantPool) ConstantInfo {
 	switch flag {
+	// sym ref
 	case CONSTANT_Class:
 		return &ConstantClassInfo{constantPool: constantPool}
 	case CONSTANT_Fieldref, CONSTANT_Methodref, CONSTANT_InterfaceMethodref:
 		return &ConstantMemberRefInfo{constantPool: constantPool}
-	case CONSTANT_String:
-		return &ConstantStringInfo{constantPool: constantPool}
+	// numeric
 	case CONSTANT_Integer:
 		return &ConstantIntegerInfo{}
 	case CONSTANT_Float:
@@ -44,10 +44,13 @@ func newConstantInfo(flag uint8, constantPool ConstantPool) ConstantInfo {
 		return &ConstantLongInfo{}
 	case CONSTANT_Double:
 		return &ConstantDoubleInfo{}
-	case CONSTANT_NameAndType:
-		return &ConstantNameAndType{}
+	// string
+	case CONSTANT_String:
+		return &ConstantStringInfo{constantPool: constantPool}
 	case CONSTANT_Utf8:
 		return &ConstantUtf8Info{}
+	case CONSTANT_NameAndType:
+		return &ConstantNameAndType{}
 	case CONSTANT_MethodHandle:
 		return &ConstantMethodHandleInfo{}
 	case CONSTANT_MethodType:

@@ -27,6 +27,10 @@ func readMember(reader *ClassReader, constantPool ConstantPool) *MemberInfo {
 	}
 }
 
+func (memInfo *MemberInfo) AccessFlag() uint16 {
+	return memInfo.accessFlag
+}
+
 func (memInfo *MemberInfo) Name() string {
 	return memInfo.constantPool.getUtf8String(memInfo.nameIndex)
 }
