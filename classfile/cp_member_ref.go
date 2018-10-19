@@ -1,13 +1,15 @@
 package classfile
 
+
 type ConstantMemberRefInfo struct {
 	constantPool     ConstantPool
 	classIndex       uint16
 	nameAndTypeIndex uint16
 }
+
 type ConstantFieldRefInfo struct{ ConstantMemberRefInfo }
 type ConstantMethodRefInfo struct{ ConstantMemberRefInfo }
-type ConstantInterfaceRefInfo struct{ ConstantMemberRefInfo }
+type ConstantInterfaceMethodRefInfo struct{ ConstantMemberRefInfo }
 
 func (memberRefInfo *ConstantMemberRefInfo) readInfo(reader *ClassReader) {
 	memberRefInfo.classIndex = reader.readUint16()

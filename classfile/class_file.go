@@ -75,6 +75,33 @@ func validateVersion(major uint16, minor uint16) {
 	panic(fmt.Sprintf("Unsupported class file version %d.%d. Supported versoins: 45.x, 46.0-52.0", major, minor))
 }
 
+func (classFile *ClassFile) AccessFlags() uint16 {
+	return classFile.accessFlags
+}
+
+func (classFile *ClassFile) ClassName() string {
+	return classFile.constantPool.getClassName(classFile.thisClassIndex)
+}
+
+func (classFile *ClassFile) SuperClassName() string {
+	return classFile.constantPool.getClassName(classFile.superClassIndex)
+}
+
+func (classFile *ClassFile) InterfaceNames() []string {
+	interfaceNames := make([]string, len(classFile.interfaces))
+	for i, idx := range classFile.interfaces {
+		interfaceNames[i] = classFile.constantPool.getClassName(idx)
+	}
+	return interfaceNames
+}
+
+func (classFile *ClassFile) ConstantPool() ConstantPool {
+	return classFile.constantPool
+}
+
 func (classFile *ClassFile) Methods() []*MemberInfo {
 	return classFile.methods
+}
+func (file *ClassFile) Field() []*MemberInfo {
+	return file.fields
 }

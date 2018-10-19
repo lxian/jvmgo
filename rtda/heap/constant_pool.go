@@ -28,7 +28,7 @@ func newConstantPool(class *Class, cfConstantPool classfile.ConstantPool) *Const
 	return &ConstantPool{constants:constants, class:class}
 }
 
-func newConstant(constantInfo classfile.ConstantInfo) Constant {
+func newConstant(cp *ConstantPool, constantInfo classfile.ConstantInfo) Constant {
 	switch constantInfo.(type) {
 	// numeric
 	case *classfile.ConstantIntegerInfo:
@@ -45,7 +45,14 @@ func newConstant(constantInfo classfile.ConstantInfo) Constant {
 	case *classfile.ConstantStringInfo:
 		return constantInfo.(*classfile.ConstantStringInfo).String()
 	// sym ref
-
+	case *classfile.ConstantClassInfo:
+		return newClassRef(cp, constantInfo.(*classfile.ConstantClassInfo))
+	case *classfile.ConstantFieldRefInfo:
+		return newFieldRef(cp, constantInfo.(*classfile.ConstantFieldRefInfo))
+	case *classfile.ConstantMethodRefInfo:
+		return newMethodRef(cp, constantInfo.(*classfile.ConstantMethodRefInfo))
+	case *classfile.ConstantInterfaceMethodRefInfo:
+		return newInterfaceMethodRef(cp, constantInfo.(*classfile.ConstantInterfaceMethodRefInfo))
 	}
 	panic(fmt.Sprintf("Unrecognized constant type %v", constantInfo))
 }

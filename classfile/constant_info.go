@@ -33,8 +33,12 @@ func newConstantInfo(flag uint8, constantPool ConstantPool) ConstantInfo {
 	// sym ref
 	case CONSTANT_Class:
 		return &ConstantClassInfo{constantPool: constantPool}
-	case CONSTANT_Fieldref, CONSTANT_Methodref, CONSTANT_InterfaceMethodref:
-		return &ConstantMemberRefInfo{constantPool: constantPool}
+	case CONSTANT_Fieldref:
+		return &ConstantFieldRefInfo{ConstantMemberRefInfo{constantPool: constantPool}}
+	case CONSTANT_Methodref:
+		return &ConstantMethodRefInfo{ConstantMemberRefInfo{constantPool: constantPool}}
+	case CONSTANT_InterfaceMethodref:
+		return &ConstantInterfaceMethodRefInfo{ConstantMemberRefInfo{constantPool: constantPool}}
 	// numeric
 	case CONSTANT_Integer:
 		return &ConstantIntegerInfo{}
