@@ -13,9 +13,15 @@ func newFields(class *Class, fieldsInfo []*classfile.MemberInfo) []*Field {
 	for i, fieldInfo := range fieldsInfo {
 		fields[i] = &Field{}
 		fields[i].class = class
-		fields[i].constantValueIndex = fieldInfo.GetConstantValueIndex()
+		fields[i].copyAttributes(fieldInfo);
 		fields[i].copyInfoFromMemberInfo(fieldInfo)
 	}
 
 	return fields
+}
+
+func (field *Field) copyAttributes(fieldInfo *classfile.MemberInfo) {
+	if constAttrInfo := fieldInfo.GetConstantValueAttribute(); constAttrInfo != nil {
+		field.constantValueIndex = constAttrInfo.ValueIndex()
+	}
 }

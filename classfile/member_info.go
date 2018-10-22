@@ -51,13 +51,13 @@ func (memInfo *MemberInfo) FindCodeAttribute() *CodeAttribute {
 	return nil
 }
 
-func (memInfo *MemberInfo) GetConstantValueIndex() uint16 {
+func (memInfo *MemberInfo) GetConstantValueAttribute() *ConstantValueAttribute {
 	for _, attrInfo := range memInfo.attributes {
 		switch attrInfo.(type) {
 		case *ConstantValueAttribute:
-			return attrInfo.(*ConstantValueAttribute).valueIndex
+			return attrInfo.(*ConstantValueAttribute)
 		}
 	}
-	return 0
+	return nil
 }
 
