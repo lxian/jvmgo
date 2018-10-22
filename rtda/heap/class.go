@@ -36,3 +36,12 @@ func newClass(classfile *classfile.ClassFile) *Class {
 
 	return cls
 }
+
+func (class *Class) packageName {
+	return class.name.
+}
+
+func (class *Class) isAccessibleTo(target *Class) {
+	class.name.
+}
+
