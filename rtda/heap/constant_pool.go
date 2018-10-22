@@ -14,9 +14,10 @@ type ConstantPool struct {
 
 func newConstantPool(class *Class, cfConstantPool classfile.ConstantPool) *ConstantPool {
 	constants := make([]Constant, len(cfConstantPool))
+	cp := &ConstantPool{}
 	for i := 1; i < len(cfConstantPool) ;{
 		info := cfConstantPool[i]
-		constants[i] = newConstant(info)
+		constants[i] = newConstant(cp, info)
 		switch info.(type) {
 		case *classfile.ConstantLongInfo, classfile.ConstantDoubleInfo:
 			i += 2
@@ -25,7 +26,9 @@ func newConstantPool(class *Class, cfConstantPool classfile.ConstantPool) *Const
 		}
 	}
 
-	return &ConstantPool{constants:constants, class:class}
+	cp.constants = constants
+	cp.class = class
+	return cp
 }
 
 func newConstant(cp *ConstantPool, constantInfo classfile.ConstantInfo) Constant {

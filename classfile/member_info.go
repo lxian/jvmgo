@@ -1,5 +1,7 @@
 package classfile
 
+import "fmt"
+
 type MemberInfo struct {
 	constantPool    ConstantPool
 	accessFlag      uint16
@@ -48,3 +50,14 @@ func (memInfo *MemberInfo) FindCodeAttribute() *CodeAttribute {
 	}
 	return nil
 }
+
+func (memInfo *MemberInfo) GetConstantValueIndex() uint16 {
+	for _, attrInfo := range memInfo.attributes {
+		switch attrInfo.(type) {
+		case *ConstantValueAttribute:
+			return attrInfo.(*ConstantValueAttribute).valueIndex
+		}
+	}
+	return 0
+}
+

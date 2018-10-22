@@ -19,7 +19,7 @@ type Class struct {
 	// var
 	instanceSlotCount uint
 	staticSlotCount uint
-	staticVars *Slots
+	staticVars Slots
 }
 
 func newClass(classfile *classfile.ClassFile) *Class {
@@ -31,7 +31,7 @@ func newClass(classfile *classfile.ClassFile) *Class {
 	cls.interfaceNames = classfile.InterfaceNames()
 	// const pool
 	cls.constantPool = newConstantPool(cls, classfile.ConstantPool())
-	cls.fields = newFileds(cls, classfile.Field())
+	cls.fields = newFields(cls, classfile.Field())
 	cls.methods = newMethods(cls, classfile.Methods())
 
 	return cls
