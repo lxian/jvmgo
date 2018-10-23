@@ -1,6 +1,5 @@
 package classfile
 
-
 type ConstantMemberRefInfo struct {
 	constantPool     ConstantPool
 	classIndex       uint16

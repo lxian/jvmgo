@@ -4,13 +4,13 @@ import "jvmgo/classfile"
 
 type SymRef struct {
 	constantPool *ConstantPool
-	className string
-	class *Class
+	className    string
+	class        *Class
 }
 
 type MemberRef struct {
 	SymRef
-	name string
+	name       string
 	descriptor string
 }
 

@@ -1,21 +1,21 @@
 package heap
 
 import (
-	"jvmgo/classfile"
 	"fmt"
+	"jvmgo/classfile"
 )
 
-type Constant interface {}
+type Constant interface{}
 
 type ConstantPool struct {
-	class *Class
+	class     *Class
 	constants []Constant
 }
 
 func newConstantPool(class *Class, cfConstantPool classfile.ConstantPool) *ConstantPool {
 	constants := make([]Constant, len(cfConstantPool))
 	cp := &ConstantPool{}
-	for i := 1; i < len(cfConstantPool) ;{
+	for i := 1; i < len(cfConstantPool); {
 		info := cfConstantPool[i]
 		constants[i] = newConstant(cp, info)
 		switch info.(type) {
@@ -66,4 +66,3 @@ func (cp *ConstantPool) GetConstant(index uint) Constant {
 	}
 	panic(fmt.Sprintf("Empty constant at %d", index))
 }
-

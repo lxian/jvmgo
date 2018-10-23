@@ -1,9 +1,9 @@
 package heap
 
 import (
-	"jvmgo/classpath"
 	"fmt"
 	"jvmgo/classfile"
+	"jvmgo/classpath"
 )
 
 type ClassLoader struct {
@@ -12,7 +12,7 @@ type ClassLoader struct {
 }
 
 func newClassLaoder(cp *classpath.Classpath) *ClassLoader {
-	return &ClassLoader{classPath:cp, classMap:make(map[string]*Class)}
+	return &ClassLoader{classPath: cp, classMap: make(map[string]*Class)}
 }
 
 func (loader *ClassLoader) LoadClass(className string) *Class {
@@ -108,7 +108,7 @@ func calcStaticFieldSlotIds(class *Class) {
 
 func calcInstanceFieldSlotIds(class *Class) {
 	var idx uint = 0
-	if (class.superClass != nil) {
+	if class.superClass != nil {
 		idx = class.superClass.instanceSlotCount
 	}
 	fields := class.fields

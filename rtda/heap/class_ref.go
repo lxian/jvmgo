@@ -7,6 +7,5 @@ type ClassRef struct {
 }
 
 func newClassRef(constantPool *ConstantPool, info *classfile.ConstantClassInfo) *ClassRef {
-	return &ClassRef{SymRef{constantPool:constantPool, className:info.Name()}}
+	return &ClassRef{SymRef{constantPool: constantPool, className: info.Name()}}
 }
-

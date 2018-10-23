@@ -60,4 +60,3 @@ func (memInfo *MemberInfo) GetConstantValueAttribute() *ConstantValueAttribute {
 	}
 	return nil
 }
-

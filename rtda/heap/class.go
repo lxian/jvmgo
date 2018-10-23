@@ -9,20 +9,20 @@ type Class struct {
 	// CL
 	classLoader *ClassLoader
 	// basic info
-	accessFlags uint16
-	name string
+	accessFlags    uint16
+	name           string
 	superClassName string
-	superClass *Class
+	superClass     *Class
 	interfaceNames []string
-	interfaces []*Class
+	interfaces     []*Class
 	// constant pool
 	constantPool *ConstantPool
-	fields []*Field
-	methods []*Method
+	fields       []*Field
+	methods      []*Method
 	// var
 	instanceSlotCount uint
-	staticSlotCount uint
-	staticVars Slots
+	staticSlotCount   uint
+	staticVars        Slots
 }
 
 func newClass(classfile *classfile.ClassFile) *Class {
@@ -62,4 +62,3 @@ func (class *Class) isSubClassOf(other *Class) bool {
 
 	return false
 }
-
