@@ -15,7 +15,7 @@ func interpret(methodInfo *classfile.MemberInfo) {
 	bytecode := codeAttr.Code()
 
 	thread := rtda.NewThread()
-	frame := rtda.NewFrame(uint(maxLocals), uint(maxStack), thread)
+	frame := rtda.NewFrame(thread, nil)
 	thread.PushFrame(frame)
 
 	defer func(frame2 *rtda.Frame) {

@@ -8,6 +8,10 @@ type Field struct {
 	constantValueIndex uint16
 }
 
+func (f *Field) SlotId() uint {
+	return f.slotId
+}
+
 func newFields(class *Class, fieldsInfo []*classfile.MemberInfo) []*Field {
 	fields := make([]*Field, len(fieldsInfo))
 	for i, fieldInfo := range fieldsInfo {

@@ -9,6 +9,14 @@ type Method struct {
 	code      []byte
 }
 
+func (m *Method) MaxStack() uint {
+	return m.maxStack
+}
+
+func (m *Method) MaxLocals() uint {
+	return m.maxLocals
+}
+
 func newMethods(class *Class, methodInfos []*classfile.MemberInfo) []*Method {
 	methods := make([]*Method, len(methodInfos))
 	for i, info := range methodInfos {
@@ -27,3 +35,5 @@ func newMethods(class *Class, methodInfos []*classfile.MemberInfo) []*Method {
 
 	return methods
 }
+
+
