@@ -1,6 +1,9 @@
 package heap
 
-import "jvmgo/classfile"
+import (
+	"jvmgo/classfile"
+	"strings"
+)
 
 type Class struct {
 	// CL
@@ -37,11 +40,14 @@ func newClass(classfile *classfile.ClassFile) *Class {
 	return cls
 }
 
-func (class *Class) packageName {
-	return class.name.
+func (class *Class) packageName() string {
+	if i := strings.LastIndex(class.name, "/"); i >= 0 {
+		return class.name[:i]
+	}
+	return ""
 }
 
-func (class *Class) isAccessibleTo(target *Class) {
-	class.name.
+func (class *Class) isAccessibleTo(other *Class) bool {
+	return HasFlag(class.accessFlags, ACC_PUBLIC) || class.packageName() == other.packageName()
 }
 

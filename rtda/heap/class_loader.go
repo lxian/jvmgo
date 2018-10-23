@@ -26,6 +26,9 @@ func (loader *ClassLoader) LoadClass(className string) *Class {
 }
 
 func (loader *ClassLoader) loadNonArrayClass(className string) *Class {
+	data := loader.readClass(className)
+	class := loader.defineClass(data)
+	link(class)
 	return loader.defineClass(loader.readClass(className))
 }
 
@@ -64,6 +67,15 @@ func (loader *ClassLoader) resolveInterfaces(class *Class) []*Class {
 		interfaces[i] = loader.LoadClass(name)
 	}
 	return interfaces
+}
+
+func link(class *Class) {
+	validate(class)
+	prepare(class)
+}
+
+func validate(class *Class) {
+	// DO NOTHING
 }
 
 func prepare(class *Class) {

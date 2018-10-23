@@ -19,11 +19,18 @@ func (mem *MemberRef) copyFromMemberInfo(info *classfile.ConstantMemberRefInfo) 
 	mem.name, mem.descriptor = info.NameAndType()
 }
 
-func (symRef *SymRef) ResolvedClass() {
+func (symRef *SymRef) ResolvedClass() *Class {
+	if symRef.class == nil {
+		symRef.resolveClassRef()
+	}
+	return symRef.class
 }
 
-func (symRef *SymRef) resolvedClassRef() {
+func (symRef *SymRef) resolveClassRef() {
 	curClass := symRef.constantPool.class
 	clz := curClass.classLoader.LoadClass(symRef.className)
-	if
+	if !clz.isAccessibleTo(curClass) {
+		panic("Illegal access error")
+	}
+	symRef.class = clz
 }

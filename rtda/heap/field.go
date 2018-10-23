@@ -25,3 +25,7 @@ func (field *Field) copyAttributes(fieldInfo *classfile.MemberInfo) {
 		field.constantValueIndex = constAttrInfo.ValueIndex()
 	}
 }
+
+func (field *Field) isAccessableTo(class *Class) bool {
+
+}
