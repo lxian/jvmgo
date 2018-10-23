@@ -27,7 +27,7 @@ func (fieldRef *FieldRef) resolveField() {
 	fieldClz := fieldRef.ResolvedClass()
 	field := lookupFiled(fieldClz, fieldRef.name, fieldRef.descriptor)
 
-	if !field.isAccessableTo(curClz) {
+	if !field.isAccessibleTo(curClz) {
 		panic("Illegal access error")
 	}
 	fieldRef.field = field

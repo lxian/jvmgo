@@ -51,3 +51,15 @@ func (class *Class) isAccessibleTo(other *Class) bool {
 	return HasFlag(class.accessFlags, ACC_PUBLIC) || class.packageName() == other.packageName()
 }
 
+func (class *Class) isSubClassOf(other *Class) bool {
+	if class == other {
+		return true
+	}
+
+	if class.superClass != nil {
+		return class.superClass == other || class.superClass.isSubClassOf(other)
+	}
+
+	return false
+}
+

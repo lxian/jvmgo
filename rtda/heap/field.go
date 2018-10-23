@@ -26,6 +26,18 @@ func (field *Field) copyAttributes(fieldInfo *classfile.MemberInfo) {
 	}
 }
 
-func (field *Field) isAccessableTo(class *Class) bool {
+func (field *Field) isAccessibleTo(class *Class) bool {
+	if HasFlag(field.accessFlags, ACC_PUBLIC) {
+		return true
+	}
 
+	if HasFlag(field.accessFlags, ACC_PROTECTED) {
+		return field.class == class || class.isSubClassOf(field.class) || class.packageName() == field.class.packageName()
+	}
+
+	if !HasFlag(field.accessFlags, ACC_PRIVATE) {
+		return class.packageName() == field.class.packageName()
+	}
+
+	return class == field.class
 }
