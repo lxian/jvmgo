@@ -16,7 +16,7 @@ func (inst *INSTANCE_OF) Execute(frame *rtda.Frame) {
 
 func doCheckInstanceOf(inst *INSTANCE_OF, frame *rtda.Frame) int32 {
 	const (
-		TRUE = 1
+		TRUE  = 1
 		FALSE = 0
 	)
 	obj := frame.OperandStack().PopRef()

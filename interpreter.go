@@ -2,20 +2,15 @@ package main
 
 import (
 	"fmt"
-	"jvmgo/classfile"
 	"jvmgo/instruction"
 	"jvmgo/instruction/factory"
 	"jvmgo/rtda"
+	"jvmgo/rtda/heap"
 )
 
-func interpret(methodInfo *classfile.MemberInfo) {
-	codeAttr := methodInfo.FindCodeAttribute()
-	maxLocals := codeAttr.MaxLocals()
-	maxStack := codeAttr.MaxStack()
-	bytecode := codeAttr.Code()
-
+func interpret(method *heap.Method) {
 	thread := rtda.NewThread()
-	frame := rtda.NewFrame(thread, nil)
+	frame := rtda.NewFrame(thread, method)
 	thread.PushFrame(frame)
 
 	defer func(frame2 *rtda.Frame) {
@@ -25,7 +20,7 @@ func interpret(methodInfo *classfile.MemberInfo) {
 			panic(r)
 		}
 	}(frame)
-	loop(thread, bytecode)
+	loop(thread, method.Code())
 }
 
 func loop(thread *rtda.Thread, bytecode []byte) {

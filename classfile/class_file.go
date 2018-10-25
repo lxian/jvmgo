@@ -84,6 +84,9 @@ func (classFile *ClassFile) ClassName() string {
 }
 
 func (classFile *ClassFile) SuperClassName() string {
+	if classFile.superClassIndex == 0 { // 0 indicate Object as the super class
+		return "java/lang/Object"
+	}
 	return classFile.constantPool.getClassName(classFile.superClassIndex)
 }
 

@@ -17,7 +17,7 @@ func getStaticFieldAndClz(idx uint, frame *rtda.Frame) (*heap.Field, *heap.Class
 	return field, clz
 }
 
-type PUT_STATIC struct { instruction.Index16Instruction }
+type PUT_STATIC struct{ instruction.Index16Instruction }
 
 func (inst *PUT_STATIC) Execute(frame *rtda.Frame) {
 	field, clz := getStaticFieldAndClz(inst.Index, frame)
@@ -37,7 +37,7 @@ func (inst *PUT_STATIC) Execute(frame *rtda.Frame) {
 	}
 }
 
-type GET_STATIC struct { instruction.Index16Instruction }
+type GET_STATIC struct{ instruction.Index16Instruction }
 
 func (inst *GET_STATIC) Execute(frame *rtda.Frame) {
 	field, clz := getStaticFieldAndClz(inst.Index, frame)
@@ -56,4 +56,3 @@ func (inst *GET_STATIC) Execute(frame *rtda.Frame) {
 		frame.OperandStack().PushRef(clz.StaticVars().GetRef(slotId))
 	}
 }
-

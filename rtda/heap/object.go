@@ -23,7 +23,7 @@ func (class *Class) NewObject() *Object {
 
 func newObject(class *Class) *Object {
 	return &Object{
-		class:class,
-		fields:newSlots(class.instanceSlotCount),
+		class:  class,
+		fields: newSlots(class.instanceSlotCount),
 	}
 }

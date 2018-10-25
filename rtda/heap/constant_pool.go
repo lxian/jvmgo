@@ -19,7 +19,7 @@ func newConstantPool(class *Class, cfConstantPool classfile.ConstantPool) *Const
 		info := cfConstantPool[i]
 		constants[i] = newConstant(cp, info)
 		switch info.(type) {
-		case *classfile.ConstantLongInfo, classfile.ConstantDoubleInfo:
+		case *classfile.ConstantLongInfo, *classfile.ConstantDoubleInfo:
 			i += 2
 		default:
 			i += 1
@@ -56,6 +56,8 @@ func newConstant(cp *ConstantPool, constantInfo classfile.ConstantInfo) Constant
 		return newMethodRef(cp, constantInfo.(*classfile.ConstantMethodRefInfo))
 	case *classfile.ConstantInterfaceMethodRefInfo:
 		return newInterfaceMethodRef(cp, constantInfo.(*classfile.ConstantInterfaceMethodRefInfo))
+	case *classfile.ConstantNameAndType:
+		return newNameAndType(cp, constantInfo.(*classfile.ConstantNameAndType))
 	}
 	panic(fmt.Sprintf("Unrecognized constant type %v", constantInfo))
 }

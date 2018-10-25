@@ -7,7 +7,6 @@ type Slot struct {
 	ref *heap.Object
 }
 
-func (s *Slot) Ref() *heap.Object {
+func (s Slot) Ref() *heap.Object {
 	return s.ref
 }
-

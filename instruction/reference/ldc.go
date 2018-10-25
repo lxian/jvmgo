@@ -1,9 +1,9 @@
 package reference
 
 import (
+	"fmt"
 	"jvmgo/instruction"
 	"jvmgo/rtda"
-	"fmt"
 )
 
 func ldc(idx uint, frame *rtda.Frame) {
@@ -49,4 +49,3 @@ func (inst *LDC2_W) Execute(frame *rtda.Frame) {
 		panic(fmt.Sprintf("todo ldc %v", val))
 	}
 }
-

@@ -9,6 +9,10 @@ type ClassMember struct {
 	class       *Class
 }
 
+func (c *ClassMember) Name() string {
+	return c.name
+}
+
 func (c *ClassMember) Descriptor() string {
 	return c.descriptor
 }

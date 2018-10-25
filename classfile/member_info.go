@@ -1,7 +1,5 @@
 package classfile
 
-import "fmt"
-
 type MemberInfo struct {
 	constantPool    ConstantPool
 	accessFlag      uint16

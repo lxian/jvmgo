@@ -1,7 +1,7 @@
 package rtda
 
 import (
-	. "jvmgo/rtda/heap"
+	"jvmgo/rtda/heap"
 	"math"
 )
 
@@ -16,7 +16,7 @@ func newOperandStack(maxOperandStackSize uint) *OperandStack {
 
 // Slot
 func (stack *OperandStack) PeekSlot() Slot {
-	return stack.operands[stack.size]
+	return stack.operands[stack.size-1]
 }
 
 func (stack *OperandStack) PushSlot(slot Slot) {
@@ -73,12 +73,12 @@ func (stack *OperandStack) PopDouble() float64 {
 }
 
 // Ref
-func (stack *OperandStack) PushRef(ref *Object) {
+func (stack *OperandStack) PushRef(ref *heap.Object) {
 	stack.operands[stack.size].ref = ref
 	stack.size += 1
 }
 
-func (stack *OperandStack) PopRef() *Object {
+func (stack *OperandStack) PopRef() *heap.Object {
 	stack.size -= 1
 	val := stack.operands[stack.size].ref
 	stack.operands[stack.size].ref = nil

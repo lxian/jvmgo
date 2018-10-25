@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"jvmgo/classfile"
 	"jvmgo/classpath"
+	"jvmgo/rtda/heap"
 	"strings"
 )
 
@@ -22,9 +22,10 @@ func startJVM(cmd *Cmd) {
 	fmt.Printf("classpath:%s class: %s args: %v\n", cmd.cpOption, cmd.class, cmd.args)
 	classPath := classpath.Parse(cmd.XjreOption, cmd.cpOption)
 	className := strings.Replace(cmd.class, ".", "/", -1)
-	classFile := loadClass(className, classPath)
 
-	mainMethod := findMainMethod(classFile)
+	classLoader := heap.NewClassLaoder(classPath)
+	class := classLoader.LoadClass(className)
+	mainMethod := findMainMethod(class)
 	fmt.Println("Found main method", mainMethod.Name(), mainMethod.Descriptor())
 
 	interpret(mainMethod)
@@ -35,26 +36,11 @@ func startJVM(cmd *Cmd) {
 	//fmt.Println(frame.OperandStack().PopDouble())
 }
 
-func findMainMethod(classFile *classfile.ClassFile) *classfile.MemberInfo {
-	for _, methodInfo := range classFile.Methods() {
-		if methodInfo.Name() == "main" && methodInfo.Descriptor() == "([Ljava/lang/String;)V" {
-			return methodInfo
+func findMainMethod(class *heap.Class) *heap.Method {
+	for _, method := range class.Methods() {
+		if method.Name() == "main" && method.Descriptor() == "([Ljava/lang/String;)V" {
+			return method
 		}
 	}
 	return nil
-}
-
-func loadClass(className string, cp *classpath.Classpath) *classfile.ClassFile {
-	data, _, err := cp.ReadClass(className)
-	if err != nil {
-		fmt.Printf("Error on load class %s %s\n", className, err)
-	} else {
-		fmt.Printf("class data: %v\n", data)
-	}
-
-	cf, err := classfile.ParseClassBytes(data)
-	if err != nil {
-		panic(err)
-	}
-	return cf
 }

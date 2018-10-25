@@ -9,6 +9,10 @@ type Method struct {
 	code      []byte
 }
 
+func (m *Method) Code() []byte {
+	return m.code
+}
+
 func (m *Method) MaxStack() uint {
 	return m.maxStack
 }
@@ -35,5 +39,3 @@ func newMethods(class *Class, methodInfos []*classfile.MemberInfo) []*Method {
 
 	return methods
 }
-
-

@@ -11,7 +11,7 @@ type ClassLoader struct {
 	classMap  map[string]*Class
 }
 
-func newClassLaoder(cp *classpath.Classpath) *ClassLoader {
+func NewClassLaoder(cp *classpath.Classpath) *ClassLoader {
 	return &ClassLoader{classPath: cp, classMap: make(map[string]*Class)}
 }
 
@@ -50,6 +50,7 @@ func (loader *ClassLoader) defineClass(codebyte []byte) *Class {
 	class.classLoader = loader
 	class.superClass = loader.resolveSuperClass(class)
 	class.interfaces = loader.resolveInterfaces(class)
+	link(class)
 
 	return class
 }
