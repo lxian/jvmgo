@@ -25,3 +25,15 @@ func newMethodRef(constantPool *ConstantPool, info *classfile.ConstantMethodRefI
 	methodRef.copyFromMemberInfo(&info.ConstantMemberRefInfo)
 	return methodRef
 }
+
+func (methodRef *MethodRef) ResolvedMethod() *Method {
+	if methodRef.method == nil {
+		resolveMethod(methodRef)
+	}
+	return methodRef.method
+}
+
+func resolveMethod(methodRef *MethodRef) {
+	methodRef.method = lookupMethod(methodRef.ResolvedClass(), methodRef.name, methodRef.descriptor)
+}
+
