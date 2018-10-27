@@ -63,6 +63,6 @@ func (class *Class) packageName() string {
 	return ""
 }
 
-func (class *Class) isAccessibleTo(other *Class) bool {
+func (class *Class) IsAccessibleTo(other *Class) bool {
 	return HasFlag(class.accessFlags, ACC_PUBLIC) || class.packageName() == other.packageName()
 }

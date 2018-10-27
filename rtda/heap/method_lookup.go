@@ -3,7 +3,7 @@ package heap
 func lookupMethod(class *Class, name string, desc string) *Method {
 	method := LookupMethodInClass(class, name, desc)
 	if method == nil {
-		method := LookupMethodInInterfaces(class.interfaces, name, desc)
+		method = LookupMethodInInterfaces(class.interfaces, name, desc)
 	}
 	return method
 }
@@ -27,7 +27,7 @@ func LookupMethodInInterfaces(ifaces []*Class, name string, desc string) *Method
 			}
 		}
 
-		method := LookupMethodInClass(iface.interfaces, name, desc)
+		method := LookupMethodInInterfaces(iface.interfaces, name, desc)
 		if method != nil {
 			return method
 		}

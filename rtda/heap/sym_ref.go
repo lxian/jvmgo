@@ -29,7 +29,7 @@ func (symRef *SymRef) ResolvedClass() *Class {
 func (symRef *SymRef) resolveClassRef() {
 	curClass := symRef.constantPool.class
 	clz := curClass.classLoader.LoadClass(symRef.className)
-	if !clz.isAccessibleTo(curClass) {
+	if !clz.IsAccessibleTo(curClass) {
 		panic("Illegal access error")
 	}
 	symRef.class = clz

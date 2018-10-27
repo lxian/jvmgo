@@ -10,6 +10,10 @@ type Method struct {
 	code      []byte
 }
 
+func (m *Method) IsStatic() bool {
+	return HasFlag(m.accessFlags, ACC_STATIC)
+}
+
 func (m *Method) ArgsCount() uint {
 	return m.argsCount
 }
@@ -26,7 +30,28 @@ func (m *Method) MaxLocals() uint {
 	return m.maxLocals
 }
 
-func (method *Method) calcArgsCount() uint {
+func (method *Method) calcArgsCount() {
+	methodDescriptor := parseMethodDescriptors(method.descriptor)
+	var cnt uint = 0
+	for _, paramType := range methodDescriptor.paramTypes {
+		switch paramType {
+		case "J", "D":
+			cnt += 2
+		default:
+			cnt += 1
+		}
+	}
+	if !HasFlag(method.accessFlags, ACC_STATIC) {
+		cnt += 1 // the implicit *this*
+	}
+	method.argsCount = cnt
+}
+
+func (method *Method) IsAccessibleTo(other *Class) bool {
+	if !method.class.IsAccessibleTo(other) {
+		return false
+	}
+
 }
 
 func newMethods(class *Class, methodInfos []*classfile.MemberInfo) []*Method {
@@ -43,8 +68,9 @@ func newMethods(class *Class, methodInfos []*classfile.MemberInfo) []*Method {
 		}
 
 		methods[i] = method
-		methods[i].argsCount = methods[i].calcArgsCount()
+		methods[i].calcArgsCount()
 	}
 
 	return methods
 }
+
