@@ -60,3 +60,12 @@ func (locals LocalVars) SetRef(index uint, ref *heap.Object) {
 func (locals LocalVars) GetRef(index uint) *heap.Object {
 	return locals[index].ref
 }
+// Slot
+func (locals LocalVars) SetSlot(index uint, slot Slot) {
+	locals[index] = slot
+}
+
+func (locals LocalVars) GetSlot(index uint) Slot {
+	return locals[index]
+}
+

@@ -6,7 +6,12 @@ type Method struct {
 	ClassMember
 	maxLocals uint
 	maxStack  uint
+	argsCount uint
 	code      []byte
+}
+
+func (m *Method) ArgsCount() uint {
+	return m.argsCount
 }
 
 func (m *Method) Code() []byte {
@@ -19,6 +24,9 @@ func (m *Method) MaxStack() uint {
 
 func (m *Method) MaxLocals() uint {
 	return m.maxLocals
+}
+
+func (method *Method) calcArgsCount() uint {
 }
 
 func newMethods(class *Class, methodInfos []*classfile.MemberInfo) []*Method {
@@ -35,6 +43,7 @@ func newMethods(class *Class, methodInfos []*classfile.MemberInfo) []*Method {
 		}
 
 		methods[i] = method
+		methods[i].argsCount = methods[i].calcArgsCount()
 	}
 
 	return methods
