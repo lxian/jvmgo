@@ -10,24 +10,40 @@ type Method struct {
 	code      []byte
 }
 
-func (m *Method) IsStatic() bool {
-	return HasFlag(m.accessFlags, ACC_STATIC)
+func (method *Method) IsStatic() bool {
+	return HasFlag(method.accessFlags, ACC_STATIC)
 }
 
-func (m *Method) ArgsCount() uint {
-	return m.argsCount
+func (method *Method) IsPublic() bool {
+	return HasFlag(method.accessFlags, ACC_PUBLIC)
 }
 
-func (m *Method) Code() []byte {
-	return m.code
+func (method *Method) IsProtected() bool {
+	return HasFlag(method.accessFlags, ACC_PROTECTED)
 }
 
-func (m *Method) MaxStack() uint {
-	return m.maxStack
+func (method *Method) IsDefault() bool {
+	return !HasFlag(method.accessFlags, ACC_PUBLIC, ACC_PROTECTED, ACC_PRIVATE)
 }
 
-func (m *Method) MaxLocals() uint {
-	return m.maxLocals
+func (method *Method) IsPrivate() bool {
+	return HasFlag(method.accessFlags, ACC_PRIVATE)
+}
+
+func (method *Method) ArgsCount() uint {
+	return method.argsCount
+}
+
+func (method *Method) Code() []byte {
+	return method.code
+}
+
+func (method *Method) MaxStack() uint {
+	return method.maxStack
+}
+
+func (method *Method) MaxLocals() uint {
+	return method.maxLocals
 }
 
 func (method *Method) calcArgsCount() {
@@ -47,11 +63,25 @@ func (method *Method) calcArgsCount() {
 	method.argsCount = cnt
 }
 
-func (method *Method) IsAccessibleTo(other *Class) bool {
-	if !method.class.IsAccessibleTo(other) {
-		return false
+func (method *Method) IsAccessibleTo(otherClz *Class) bool {
+	clz := method.class
+	if clz == otherClz {
+		return true
 	}
 
+	if method.IsPublic() {
+		return true
+	}
+
+	if method.IsProtected() && (clz.SamePackage(otherClz) || otherClz.IsSubClassOf(clz)){
+		return true
+	}
+
+	if method.IsDefault() && clz.SamePackage(otherClz) {
+		return true
+	}
+
+	return false
 }
 
 func newMethods(class *Class, methodInfos []*classfile.MemberInfo) []*Method {

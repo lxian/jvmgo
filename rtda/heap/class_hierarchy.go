@@ -1,12 +1,12 @@
 package heap
 
-func (class *Class) isSubClassOf(other *Class) bool {
+func (class *Class) IsSubClassOf(other *Class) bool {
 	if class == other {
 		return true
 	}
 
 	if class.superClass != nil {
-		return class.superClass.isSubClassOf(other)
+		return class.superClass.IsSubClassOf(other)
 	}
 	return false
 }
@@ -16,7 +16,7 @@ func (class *Class) Implemented(other *Class) bool {
 		return true
 	}
 	for _, iface := range class.interfaces {
-		if iface.isSubClassOf(other) {
+		if iface.IsSubClassOf(other) {
 			return true
 		}
 	}
@@ -41,7 +41,7 @@ func (class *Class) isAssignableFrom(other *Class) bool {
 		if class.IsInterface() {
 			return other.Implemented(class)
 		} else {
-			return other.isSubClassOf(class)
+			return other.IsSubClassOf(class)
 		}
 	}
 }

@@ -36,7 +36,7 @@ func (field *Field) isAccessibleTo(class *Class) bool {
 	}
 
 	if HasFlag(field.accessFlags, ACC_PROTECTED) {
-		return field.class == class || class.isSubClassOf(field.class) || class.packageName() == field.class.packageName()
+		return field.class == class || class.IsSubClassOf(field.class) || class.packageName() == field.class.packageName()
 	}
 
 	if !HasFlag(field.accessFlags, ACC_PRIVATE) {

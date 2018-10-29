@@ -25,20 +25,20 @@ type Class struct {
 	staticVars        Slots
 }
 
-func (c *Class) Methods() []*Method {
-	return c.methods
+func (class *Class) Methods() []*Method {
+	return class.methods
 }
 
-func (c *Class) StaticVars() Slots {
-	return c.staticVars
+func (class *Class) StaticVars() Slots {
+	return class.staticVars
 }
 
-func (c *Class) AccessFlags() uint16 {
-	return c.accessFlags
+func (class *Class) AccessFlags() uint16 {
+	return class.accessFlags
 }
 
-func (c *Class) ConstantPool() *ConstantPool {
-	return c.constantPool
+func (class *Class) ConstantPool() *ConstantPool {
+	return class.constantPool
 }
 
 func newClass(classfile *classfile.ClassFile) *Class {
@@ -61,6 +61,10 @@ func (class *Class) packageName() string {
 		return class.name[:i]
 	}
 	return ""
+}
+
+func (class *Class) SamePackage(other *Class) bool {
+	return class.packageName() == other.packageName()
 }
 
 func (class *Class) IsAccessibleTo(other *Class) bool {

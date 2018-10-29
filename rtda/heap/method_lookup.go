@@ -8,6 +8,10 @@ func lookupMethod(class *Class, name string, desc string) *Method {
 	return method
 }
 
+func lookupInterfaceMethod(iface *Class, name string, desc string) *Method {
+	return LookupMethodInInterfaces([]*Class{iface}, name, desc)
+}
+
 func LookupMethodInClass(class *Class, name string, desc string) *Method {
 	for clz := class; clz != nil; clz = clz.superClass {
 		for _, method := range clz.methods {

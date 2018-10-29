@@ -14,6 +14,33 @@ func newInterfaceMethodRef(constantPool *ConstantPool, info *classfile.ConstantI
 	return interfaceMethodRef
 }
 
+func (methodRef *InterfaceMethodRef) ResolvedInterfaceMethod() *Method {
+	if methodRef.method == nil {
+		resolveInterfaceMethod(methodRef)
+	}
+	return methodRef.method
+}
+
+func resolveInterfaceMethod(methodRef *InterfaceMethodRef) {
+	clz := methodRef.ResolvedClass()
+
+	if !clz.IsInterface() {
+		panic("java.lang.IncompatibleClassChangeError")
+	}
+
+	method := lookupInterfaceMethod(clz, methodRef.name, methodRef.descriptor)
+	if method == nil {
+		panic("java.lang.NoSuchMethodError")
+	}
+
+	if !method.IsAccessibleTo(methodRef.class) {
+		panic("java.lang.IllegalAccessError")
+	}
+
+	methodRef.method = method
+}
+
+
 type MethodRef struct {
 	MemberRef
 	method *Method
@@ -34,6 +61,21 @@ func (methodRef *MethodRef) ResolvedMethod() *Method {
 }
 
 func resolveMethod(methodRef *MethodRef) {
-	methodRef.method = lookupMethod(methodRef.ResolvedClass(), methodRef.name, methodRef.descriptor)
+	clz := methodRef.ResolvedClass()
+
+	if clz.IsInterface() {
+		panic("java.lang.IncompatibleClassChangeError")
+	}
+
+	method := lookupMethod(clz, methodRef.name, methodRef.descriptor)
+	if method == nil {
+		panic("java.lang.NoSuchMethodError")
+	}
+
+	if !method.IsAccessibleTo(methodRef.class) {
+		panic("java.lang.IllegalAccessError")
+	}
+
+	methodRef.method = method
 }
 
