@@ -21,10 +21,11 @@ func (inst *INVOKE_SPECIAL) Execute(frame *rtda.Frame) {
 	if method.IsStatic() {
 		panic("java.lang.IncompatibleClassChangeError")
 	}
-	if method.Name() == "<init>" || method.Class() != resolvedClz {
+	if method.Name() == "<init>" && method.Class() != resolvedClz {
 		panic("java.lang.NoSuchMethodError")
 	}
 
+	instruction.AssertThisRef(method, frame)
 
 	if heap.HasFlag(invokerClz.AccessFlags(), heap.ACC_SUPER) &&
 		invokerClz.IsSubClassOf(resolvedClz) &&

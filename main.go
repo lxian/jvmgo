@@ -23,17 +23,12 @@ func startJVM(cmd *Cmd) {
 	classPath := classpath.Parse(cmd.XjreOption, cmd.cpOption)
 	className := strings.Replace(cmd.class, ".", "/", -1)
 
-	classLoader := heap.NewClassLaoder(classPath)
+	classLoader := heap.NewClassLaoder(classPath, cmd.verboseClassFlag)
 	class := classLoader.LoadClass(className)
 	mainMethod := findMainMethod(class)
 	fmt.Println("Found main method", mainMethod.Name(), mainMethod.Descriptor())
 
-	interpret(mainMethod)
-	//frame := rtda.NewFrame(100, 100, thr)
-	//frame.LocalVars().SetDouble(1, 1.234)
-	//fmt.Println(frame.LocalVars().GetDouble(1))
-	//frame.OperandStack().PushDouble(1.234)
-	//fmt.Println(frame.OperandStack().PopDouble())
+	interpret(mainMethod, cmd.verboseInstFlag)
 }
 
 func findMainMethod(class *heap.Class) *heap.Method {

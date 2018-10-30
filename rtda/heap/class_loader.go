@@ -9,10 +9,11 @@ import (
 type ClassLoader struct {
 	classPath *classpath.Classpath
 	classMap  map[string]*Class
+	verboseClass bool
 }
 
-func NewClassLaoder(cp *classpath.Classpath) *ClassLoader {
-	return &ClassLoader{classPath: cp, classMap: make(map[string]*Class)}
+func NewClassLaoder(cp *classpath.Classpath, verboseClass bool) *ClassLoader {
+	return &ClassLoader{classPath: cp, classMap: make(map[string]*Class), verboseClass:verboseClass}
 }
 
 func (loader *ClassLoader) LoadClass(className string) *Class {
@@ -26,18 +27,22 @@ func (loader *ClassLoader) LoadClass(className string) *Class {
 }
 
 func (loader *ClassLoader) loadNonArrayClass(className string) *Class {
-	data := loader.readClass(className)
+	data, entry := loader.readClass(className)
 	class := loader.defineClass(data)
 	link(class)
-	return loader.defineClass(loader.readClass(className))
+
+	if loader.verboseClass {
+		fmt.Printf("[Load %s from %s]\n", className, entry)
+	}
+	return class
 }
 
-func (loader *ClassLoader) readClass(className string) []byte {
-	data, _, err := loader.classPath.ReadClass(className)
+func (loader *ClassLoader) readClass(className string) ([]byte, classpath.Entry) {
+	data, entry, err := loader.classPath.ReadClass(className)
 	if err != nil {
 		panic(fmt.Sprintf("Failed reading class %s, %v", className, err))
 	}
-	return data
+	return data, entry
 }
 
 func (loader *ClassLoader) defineClass(codebyte []byte) *Class {
@@ -138,19 +143,21 @@ func allocAndInitStaticVars(class *Class) {
 }
 
 func initStaticVar(class *Class, field *Field) {
-	idx := uint(field.constantValueIndex)
-	constVal := class.constantPool.GetConstant(idx)
+	cpIdx := uint(field.constantValueIndex)
 
-	switch field.descriptor {
-	case "B", "C", "I", "Z", "S":
-		class.staticVars.SetInt(field.slotId, constVal.(int32))
-	case "F":
-		class.staticVars.SetFloat(field.slotId, constVal.(float32))
-	case "D":
-		class.staticVars.SetDouble(field.slotId, constVal.(float64))
-	case "L":
-		class.staticVars.SetLong(field.slotId, constVal.(int64))
-	default:
-		panic(fmt.Sprintf("Field %v Constant Value: Bad descriptor", field))
+	if cpIdx > 0 {
+		constVal := class.constantPool.GetConstant(cpIdx)
+		switch field.descriptor {
+		case "B", "C", "I", "Z", "S":
+			class.staticVars.SetInt(field.slotId, constVal.(int32))
+		case "F":
+			class.staticVars.SetFloat(field.slotId, constVal.(float32))
+		case "D":
+			class.staticVars.SetDouble(field.slotId, constVal.(float64))
+		case "J":
+			class.staticVars.SetLong(field.slotId, constVal.(int64))
+		default:
+			panic(fmt.Sprintf("Field %v Constant Value: Bad descriptor", field))
+		}
 	}
 }

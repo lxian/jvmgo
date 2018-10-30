@@ -19,6 +19,11 @@ func (stack *OperandStack) PeekSlot() Slot {
 	return stack.operands[stack.size-1]
 }
 
+func (stack *OperandStack) PeekSlotBelow(cnt uint) Slot {
+	topIdx := stack.size-1
+	return stack.operands[topIdx - cnt]
+}
+
 func (stack *OperandStack) PushSlot(slot Slot) {
 	stack.operands[stack.size] = slot
 	stack.size += 1

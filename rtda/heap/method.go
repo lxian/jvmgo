@@ -4,10 +4,14 @@ import "jvmgo/classfile"
 
 type Method struct {
 	ClassMember
-	maxLocals uint
-	maxStack  uint
-	argsCount uint
-	code      []byte
+	maxLocals     uint
+	maxStack      uint
+	argsSlotCount uint
+	code          []byte
+}
+
+func (method *Method) IsAbstract() bool {
+	return HasFlag(method.accessFlags, ACC_ABSTRACT)
 }
 
 func (method *Method) IsStatic() bool {
@@ -30,8 +34,8 @@ func (method *Method) IsPrivate() bool {
 	return HasFlag(method.accessFlags, ACC_PRIVATE)
 }
 
-func (method *Method) ArgsCount() uint {
-	return method.argsCount
+func (method *Method) ArgsSlotCount() uint {
+	return method.argsSlotCount
 }
 
 func (method *Method) Code() []byte {
@@ -60,7 +64,7 @@ func (method *Method) calcArgsCount() {
 	if !HasFlag(method.accessFlags, ACC_STATIC) {
 		cnt += 1 // the implicit *this*
 	}
-	method.argsCount = cnt
+	method.argsSlotCount = cnt
 }
 
 func (method *Method) IsAccessibleTo(otherClz *Class) bool {

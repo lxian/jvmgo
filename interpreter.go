@@ -6,43 +6,67 @@ import (
 	"jvmgo/instruction/factory"
 	"jvmgo/rtda"
 	"jvmgo/rtda/heap"
+	"strings"
 )
 
-func interpret(method *heap.Method) {
+func interpret(method *heap.Method, logInst bool) {
 	thread := rtda.NewThread()
 	frame := rtda.NewFrame(thread, method)
 	thread.PushFrame(frame)
 
-	defer func(frame2 *rtda.Frame) {
+	defer func(frm *rtda.Frame) {
 		if r := recover(); r != nil {
-			fmt.Printf("LocalVars: %v\n", frame.LocalVars())
-			fmt.Printf("OperandStack: %v\n", frame.OperandStack())
+			logFrames(frm.Thread())
 			panic(r)
 		}
 	}(frame)
-	loop(thread, method.Code())
+	loop(thread, logInst)
 }
 
-func loop(thread *rtda.Thread, bytecode []byte) {
-	frame := thread.PopFrame()
+func loop(thread *rtda.Thread, logInst bool) {
 	reader := &instruction.ByteCodeReader{}
 
 	for {
+		frame := thread.CurrentFrame()
+		if frame == nil {
+			break
+		}
+
 		pc := frame.NextPC()
-		thread.SetPC(pc)
+		thread.SetPC(pc) // thread keep the PC of current op
 
-		reader.Reset(bytecode, pc)
+		reader.Reset(frame.Method().Code(), pc) // reader keep the PC of current reading byte
 		opcode := reader.ReadUint8()
-		instruction := factory.NewInstruction(opcode)
-		instruction.FetchOperands(reader)
-		frame.SetNextPC(reader.PC())
+		inst := factory.NewInstruction(opcode)
+		inst.FetchOperands(reader)
+		frame.SetNextPC(reader.PC()) // frame keep the PC of current execution/jump
 
-		fmt.Printf("pc: %2d inst: %T %v \n", pc, instruction, instruction)
-		fmt.Printf("Locals: %v\n", frame.LocalVars())
-		fmt.Printf("Stack: %v\n", frame.OperandStack())
-		instruction.Execute(frame)
-		fmt.Printf(">Locals: %v\n", frame.LocalVars())
-		fmt.Printf(">Stack: %v\n", frame.OperandStack())
-		fmt.Println("-----------")
+		if logInst {
+			logInstruction(inst, frame)
+		}
+
+		inst.Execute(frame)
+	}
+}
+
+func logInstruction(inst instruction.Instruction, frame *rtda.Frame) {
+	method := frame.Method()
+	className := method.Class().Name()
+	methodName := method.Name()
+	fmt.Printf("%v.%v() pc %2d inst %T %v \n", className, methodName, frame.Thread().PC(), inst, inst)
+}
+
+func logFrames(thread *rtda.Thread) {
+	fmt.Printf("LocalVars: %v\n", thread.CurrentFrame().LocalVars())
+	fmt.Printf("OperandStack: %v\n\n", thread.CurrentFrame().OperandStack())
+	i := 0
+	for !thread.IsStackEmpty() {
+		frame := thread.PopFrame()
+		method := frame.Method()
+		class := method.Class()
+
+		fmt.Printf(strings.Repeat("  ", i))
+		fmt.Printf("pc:%4d %v.%v%v\n", frame.NextPC(), class.Name(), method.Name(), method.Descriptor())
+		i += 1
 	}
 }

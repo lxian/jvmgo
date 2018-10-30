@@ -11,6 +11,8 @@ type Cmd struct {
 	cpOption    string
 	class       string
 	args        []string
+	verboseClassFlag bool
+	verboseInstFlag bool
 }
 
 func parseCmd() *Cmd {
@@ -23,6 +25,8 @@ func parseCmd() *Cmd {
 	flag.StringVar(&cmd.XjreOption, "Xjre", "", "JRE base dir")
 	flag.StringVar(&cmd.cpOption, "classpath", "", "classpath")
 	flag.StringVar(&cmd.cpOption, "cp", "", "classpath")
+	flag.BoolVar(&cmd.verboseClassFlag, "verbose:class", false, "print class info on class load")
+	flag.BoolVar(&cmd.verboseInstFlag, "verbose:inst", false, "print instruction on execution")
 	flag.Parse()
 
 	if args := flag.Args(); len(args) > 0 {

@@ -14,9 +14,5 @@ func (inst *INVOKE_STATIC) Execute(frame *rtda.Frame) {
 	methodRef := frame.Method().Class().ConstantPool().GetConstant(inst.Index).(heap.MethodRef)
 	method := methodRef.ResolvedMethod()
 
-	if !method.IsStatic() {
-		panic("java.lang.IncompatibleClassChangeError")
-	}
-
-	instruction.InvokeStatic(method, frame)
+	instruction.Invoke(method, frame)
 }

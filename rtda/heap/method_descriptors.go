@@ -86,8 +86,13 @@ func parseType(parser *MethodDescriptorParser) string {
 	case OBJECT:
 		return "L"+parser.readUntil(';')
 	case ARRAY:
-		panic("TODO: array type args")
+		return parseArr(parser)
+	case VOID:
+		return "V"
 	}
 	panic("Unrecognized arg/return type")
 }
 
+func parseArr(parser *MethodDescriptorParser) string {
+	return "[" + parseType(parser)
+}

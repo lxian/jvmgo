@@ -25,6 +25,10 @@ type Class struct {
 	staticVars        Slots
 }
 
+func (class *Class) Name() string {
+	return class.name
+}
+
 func (class *Class) Methods() []*Method {
 	return class.methods
 }

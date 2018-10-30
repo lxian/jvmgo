@@ -6,25 +6,27 @@ import (
 )
 
 func Invoke(method *heap.Method, frame *rtda.Frame) {
-	invoke(method, frame, false)
-}
-
-func InvokeStatic(method *heap.Method, frame *rtda.Frame) {
-	invoke(method, frame, true)
-}
-
-func invoke(method *heap.Method, frame *rtda.Frame, static bool) {
 	thread := frame.Thread()
 	newFrame := rtda.NewFrame(frame.Thread(), method)
 
-	for i := method.ArgsCount()-1; i>=0; i-- {
+	for i := int(method.ArgsSlotCount()-1); i>=0; i-- {
 		slot := frame.OperandStack().PopSlot()
-		newFrame.LocalVars().SetSlot(i, slot)
-	}
-
-	if !static && newFrame.LocalVars().GetRef(0) == nil {
-		panic("java.lang.NullPointerException")
+		newFrame.LocalVars().SetSlot(uint(i), slot)
 	}
 
 	thread.PushFrame(newFrame)
+}
+
+func AssertThisRef(method *heap.Method, frame *rtda.Frame) {
+	if FindThisRef(method, frame) == nil {
+		panic("java.lang.IncompatibleClassChangeError")
+	}
+}
+
+func FindThisRef(method *heap.Method, frame *rtda.Frame) *heap.Object {
+	if method.IsStatic() {
+		panic("No implicit this ref for static method")
+	}
+
+	return frame.OperandStack().PeekSlotBelow(method.ArgsSlotCount()-1).Ref()
 }

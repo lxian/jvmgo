@@ -29,6 +29,10 @@ func (thread *Thread) CurrentFrame() *Frame {
 	return thread.stack.top()
 }
 
+func (thread *Thread) IsStackEmpty() bool {
+	return thread.stack.top() == nil
+}
+
 type Stack struct {
 	maxSize uint
 	size    uint

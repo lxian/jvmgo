@@ -9,20 +9,20 @@ type ClassMember struct {
 	class       *Class
 }
 
-func (c *ClassMember) Name() string {
-	return c.name
+func (member *ClassMember) Name() string {
+	return member.name
 }
 
-func (c *ClassMember) Descriptor() string {
-	return c.descriptor
+func (member *ClassMember) Descriptor() string {
+	return member.descriptor
 }
 
-func (c *ClassMember) AccessFlags() uint16 {
-	return c.accessFlags
+func (member *ClassMember) AccessFlags() uint16 {
+	return member.accessFlags
 }
 
-func (c *ClassMember) Class() *Class {
-	return c.class
+func (member *ClassMember) Class() *Class {
+	return member.class
 }
 
 func (member *ClassMember) copyInfoFromMemberInfo(memInfo *classfile.MemberInfo) {

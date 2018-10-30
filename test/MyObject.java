@@ -12,7 +12,7 @@ public class MyObject {
         Object obj = myObj;
         if (obj instanceof MyObject) {
             myObj = (MyObject) obj;
-            //System.out.println(myObj.instanceVar);
+            System.out.println(myObj.instanceVar);
         }
     }
 }
