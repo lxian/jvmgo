@@ -53,20 +53,19 @@ func logInstruction(inst instruction.Instruction, frame *rtda.Frame) {
 	method := frame.Method()
 	className := method.Class().Name()
 	methodName := method.Name()
+	fmt.Printf(strings.Repeat(".", int(frame.Thread().StackSize())))
 	fmt.Printf("%v.%v() pc %2d inst %T %v \n", className, methodName, frame.Thread().PC(), inst, inst)
 }
 
 func logFrames(thread *rtda.Thread) {
 	fmt.Printf("LocalVars: %v\n", thread.CurrentFrame().LocalVars())
 	fmt.Printf("OperandStack: %v\n\n", thread.CurrentFrame().OperandStack())
-	i := 0
 	for !thread.IsStackEmpty() {
 		frame := thread.PopFrame()
 		method := frame.Method()
 		class := method.Class()
 
-		fmt.Printf(strings.Repeat("  ", i))
-		fmt.Printf("pc:%4d %v.%v%v\n", frame.NextPC(), class.Name(), method.Name(), method.Descriptor())
-		i += 1
+		fmt.Printf(">pc:%4d %v.%v%v\n", frame.NextPC(), class.Name(), method.Name(), method.Descriptor())
+		fmt.Printf("%v \n", frame)
 	}
 }

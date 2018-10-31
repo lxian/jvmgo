@@ -11,7 +11,7 @@ type INVOKE_STATIC struct {
 }
 
 func (inst *INVOKE_STATIC) Execute(frame *rtda.Frame) {
-	methodRef := frame.Method().Class().ConstantPool().GetConstant(inst.Index).(heap.MethodRef)
+	methodRef := frame.Method().Class().ConstantPool().GetConstant(inst.Index).(*heap.MethodRef)
 	method := methodRef.ResolvedMethod()
 
 	instruction.Invoke(method, frame)

@@ -47,6 +47,7 @@ func checkAndHackPrintln(obj *heap.Object, method *heap.Method, frame *rtda.Fram
 			case "(F)V": fmt.Printf("%v\n", frame.OperandStack().PopFloat())
 			default: panic("println: " +method.Descriptor())
 			}
+			frame.OperandStack().PopRef() // pop out the nil ref
 			return true
 		}
 	}

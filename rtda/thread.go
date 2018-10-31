@@ -33,10 +33,18 @@ func (thread *Thread) IsStackEmpty() bool {
 	return thread.stack.top() == nil
 }
 
+func (thread *Thread) StackSize() uint {
+	return thread.stack.size
+}
+
 type Stack struct {
 	maxSize uint
 	size    uint
 	_top    *Frame
+}
+
+func (stack *Stack) Size() uint {
+	return stack.size
 }
 
 func newStack(maxSize uint) *Stack {
@@ -58,6 +66,7 @@ func (stack *Stack) pop() *Frame {
 	}
 	topFrame := stack._top
 	stack._top = topFrame.lower
+	stack.size -= 1
 	return topFrame
 }
 
