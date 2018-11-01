@@ -23,6 +23,33 @@ type Class struct {
 	instanceSlotCount uint
 	staticSlotCount   uint
 	staticVars        Slots
+	// class init
+	initStarted bool
+}
+
+func (class *Class) FindStaticMethod(name string, desc string) *Method {
+	for _, method := range class.methods {
+		if method.IsStatic() && method.name == name && method.descriptor == desc {
+			return method
+		}
+	}
+	return nil
+}
+
+func (class *Class) SuperClass() *Class {
+	return class.superClass
+}
+
+func (class *Class) FindInitMethod() *Method {
+	return class.FindStaticMethod("<clinit>", "()V")
+}
+
+func (class *Class) StartInit() {
+	class.initStarted = true
+}
+
+func (class *Class) InitStarted() bool {
+	return class.initStarted
 }
 
 func (class *Class) Name() string {

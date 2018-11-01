@@ -11,9 +11,11 @@ func getStaticFieldAndClz(idx uint, frame *rtda.Frame) (*heap.Field, *heap.Class
 	fieldRef := cp.GetConstant(idx).(*heap.FieldRef)
 	field := fieldRef.ResolvedField()
 	clz := fieldRef.ResolvedClass()
+
 	if !heap.HasFlag(field.AccessFlags(), heap.ACC_STATIC) {
 		panic("Static operation on non static field")
 	}
+
 	return field, clz
 }
 
@@ -21,6 +23,12 @@ type PUT_STATIC struct{ instruction.Index16Instruction }
 
 func (inst *PUT_STATIC) Execute(frame *rtda.Frame) {
 	field, clz := getStaticFieldAndClz(inst.Index, frame)
+
+	if !clz.InitStarted() {
+		frame.RevertNextPC()
+		instruction.InitClass(frame.Thread(), clz)
+		return
+	}
 
 	slotId := field.SlotId()
 	switch field.Descriptor()[0] {
@@ -41,6 +49,12 @@ type GET_STATIC struct{ instruction.Index16Instruction }
 
 func (inst *GET_STATIC) Execute(frame *rtda.Frame) {
 	field, clz := getStaticFieldAndClz(inst.Index, frame)
+
+	if !clz.InitStarted() {
+		frame.RevertNextPC()
+		instruction.InitClass(frame.Thread(), clz)
+		return
+	}
 
 	slotId := field.SlotId()
 	switch field.Descriptor()[0] {

@@ -77,7 +77,7 @@ func (method *Method) IsAccessibleTo(otherClz *Class) bool {
 		return true
 	}
 
-	if method.IsProtected() && (clz.SamePackage(otherClz) || otherClz.IsSubClassOf(clz)){
+	if method.IsProtected() && (clz.SamePackage(otherClz) || otherClz.IsSubClassOf(clz)) {
 		return true
 	}
 
@@ -107,4 +107,3 @@ func newMethods(class *Class, methodInfos []*classfile.MemberInfo) []*Method {
 
 	return methods
 }
-

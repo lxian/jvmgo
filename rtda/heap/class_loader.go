@@ -7,13 +7,13 @@ import (
 )
 
 type ClassLoader struct {
-	classPath *classpath.Classpath
-	classMap  map[string]*Class
+	classPath    *classpath.Classpath
+	classMap     map[string]*Class
 	verboseClass bool
 }
 
 func NewClassLaoder(cp *classpath.Classpath, verboseClass bool) *ClassLoader {
-	return &ClassLoader{classPath: cp, classMap: make(map[string]*Class), verboseClass:verboseClass}
+	return &ClassLoader{classPath: cp, classMap: make(map[string]*Class), verboseClass: verboseClass}
 }
 
 func (loader *ClassLoader) LoadClass(className string) *Class {

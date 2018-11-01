@@ -5,14 +5,14 @@ import "fmt"
 import "os"
 
 type Cmd struct {
-	helpFlag    bool
-	versionFlag bool
-	XjreOption  string
-	cpOption    string
-	class       string
-	args        []string
+	helpFlag         bool
+	versionFlag      bool
+	XjreOption       string
+	cpOption         string
+	class            string
+	args             []string
 	verboseClassFlag bool
-	verboseInstFlag bool
+	verboseInstFlag  bool
 }
 
 func parseCmd() *Cmd {

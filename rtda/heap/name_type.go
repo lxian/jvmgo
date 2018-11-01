@@ -3,8 +3,8 @@ package heap
 import "jvmgo/classfile"
 
 type NameAndType struct {
-	pool *ConstantPool
-	nameIdx uint16
+	pool          *ConstantPool
+	nameIdx       uint16
 	descriptorIdx uint16
 }
 
@@ -17,5 +17,5 @@ func (nameAndType *NameAndType) Descriptor() string {
 }
 
 func newNameAndType(pool *ConstantPool, info *classfile.ConstantNameAndType) *NameAndType {
-	return &NameAndType{pool:pool,nameIdx:info.NameIndex(),descriptorIdx:info.DescriptorIndex()}
+	return &NameAndType{pool: pool, nameIdx: info.NameIndex(), descriptorIdx: info.DescriptorIndex()}
 }

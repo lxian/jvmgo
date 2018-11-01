@@ -15,6 +15,12 @@ func (inst *NEW) Execute(frame *rtda.Frame) {
 	classRef := cp.GetConstant(inst.Index).(*heap.ClassRef)
 	class := classRef.ResolvedClass()
 
+	if !class.InitStarted() {
+		frame.RevertNextPC()
+		instruction.InitClass(frame.Thread(), class)
+		return
+	}
+
 	if heap.HasFlag(class.AccessFlags(), heap.ACC_INTERFACE) || heap.HasFlag(class.AccessFlags(), heap.ACC_ABSTRACT) {
 		panic("Instantiation error")
 	}

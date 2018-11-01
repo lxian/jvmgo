@@ -5,17 +5,29 @@ import (
 	"jvmgo/rtda"
 )
 
-type RETURN struct { instruction.NoOperandsInstruction }
+type RETURN struct {
+	instruction.NoOperandsInstruction
+}
 
 func (*RETURN) Execute(frame *rtda.Frame) {
 	frame.Thread().PopFrame()
 }
 
-type ARETURN struct { instruction.NoOperandsInstruction }
-type DRETURN struct { instruction.NoOperandsInstruction }
-type FRETURN struct { instruction.NoOperandsInstruction }
-type LRETURN struct { instruction.NoOperandsInstruction }
-type IRETURN struct { instruction.NoOperandsInstruction }
+type ARETURN struct {
+	instruction.NoOperandsInstruction
+}
+type DRETURN struct {
+	instruction.NoOperandsInstruction
+}
+type FRETURN struct {
+	instruction.NoOperandsInstruction
+}
+type LRETURN struct {
+	instruction.NoOperandsInstruction
+}
+type IRETURN struct {
+	instruction.NoOperandsInstruction
+}
 
 func (*ARETURN) Execute(frame *rtda.Frame) {
 	thread := frame.Thread()
@@ -51,4 +63,3 @@ func (*IRETURN) Execute(frame *rtda.Frame) {
 	invoker := thread.CurrentFrame()
 	invoker.OperandStack().PushInt(poped.OperandStack().PopInt())
 }
-

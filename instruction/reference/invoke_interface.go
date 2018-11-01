@@ -41,6 +41,3 @@ func (inst *INVOKE_INTERFACE) Execute(frame *rtda.Frame) {
 	}
 	instruction.Invoke(toInvoke, frame)
 }
-
-
-

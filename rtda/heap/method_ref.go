@@ -40,7 +40,6 @@ func resolveInterfaceMethod(methodRef *InterfaceMethodRef) {
 	methodRef.method = method
 }
 
-
 type MethodRef struct {
 	MemberRef
 	method *Method
@@ -78,4 +77,3 @@ func resolveMethod(methodRef *MethodRef) {
 
 	methodRef.method = method
 }
-

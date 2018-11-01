@@ -5,16 +5,16 @@ import (
 	. "jvmgo/instruction"
 	. "jvmgo/instruction/comparsion"
 	. "jvmgo/instruction/constant"
+	. "jvmgo/instruction/control"
 	. "jvmgo/instruction/conversion"
 	. "jvmgo/instruction/extended"
 	. "jvmgo/instruction/jump"
 	. "jvmgo/instruction/load"
 	. "jvmgo/instruction/math"
+	. "jvmgo/instruction/reference"
 	. "jvmgo/instruction/stack"
 	. "jvmgo/instruction/store"
 	. "jvmgo/instruction/switchjump"
-	. "jvmgo/instruction/reference"
-	. "jvmgo/instruction/control"
 )
 
 // NoOperandsInstruction singletons
@@ -156,12 +156,12 @@ var (
 	fcmpg   = &FCMPG{}
 	dcmpl   = &DCMPL{}
 	dcmpg   = &DCMPG{}
-	ireturn       = &IRETURN{}
-	lreturn       = &LRETURN{}
-	freturn       = &FRETURN{}
-	dreturn       = &DRETURN{}
-	areturn       = &ARETURN{}
-	_return       = &RETURN{}
+	ireturn = &IRETURN{}
+	lreturn = &LRETURN{}
+	freturn = &FRETURN{}
+	dreturn = &DRETURN{}
+	areturn = &ARETURN{}
+	_return = &RETURN{}
 	//arraylength   = &ARRAY_LENGTH{}
 	//athrow        = &ATHROW{}
 	//monitorenter  = &MONITOR_ENTER{}
