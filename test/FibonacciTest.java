@@ -1,5 +1,4 @@
 public class FibonacciTest {
-
     public static long value = 30;
 
     public static void main(String[] args) {

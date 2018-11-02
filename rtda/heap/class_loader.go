@@ -21,7 +21,13 @@ func (loader *ClassLoader) LoadClass(className string) *Class {
 		return loader.classMap[className]
 	}
 
-	class := loader.loadNonArrayClass(className)
+	var class *Class
+	if className[0] == '[' {
+		class = loader.loadArrayClass(className)
+	} else {
+		class = loader.loadNonArrayClass(className)
+	}
+
 	loader.classMap[class.name] = class
 	return class
 }
@@ -73,6 +79,20 @@ func (loader *ClassLoader) resolveInterfaces(class *Class) []*Class {
 		interfaces[i] = loader.LoadClass(name)
 	}
 	return interfaces
+}
+
+func (loader *ClassLoader) loadArrayClass(name string) *Class {
+	return &Class{
+		classLoader:loader,
+		accessFlags: ACC_PUBLIC, // TODO
+		name: name,
+		initStarted:true,
+		superClass: loader.LoadClass("java/lang/Object"),
+		interfaces: []*Class{
+			loader.LoadClass("java/lang/Clonable"),
+			loader.LoadClass("java/lang/Serializable"),
+		},
+	}
 }
 
 func link(class *Class) {

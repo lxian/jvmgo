@@ -2,15 +2,15 @@ package heap
 
 type Object struct {
 	class  *Class
-	fields Slots
+	fields interface{}
 }
 
-func (o *Object) Class() *Class {
-	return o.class
+func (object *Object) Class() *Class {
+	return object.class
 }
 
-func (o *Object) Fields() Slots {
-	return o.fields
+func (object *Object) Fields() Slots {
+	return object.fields.(Slots)
 }
 func (object *Object) IsInstanceOf(other *Class) bool {
 	clz := object.class
