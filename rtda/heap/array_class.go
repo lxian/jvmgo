@@ -21,6 +21,11 @@ func (class *Class) NewArray(count uint) *Object {
 	return obj
 }
 
+func (class *Class) ArrayClass() *Class {
+	arrClzName := getArrayClassName(class.name)
+	return class.classLoader.loadArrayClass(arrClzName)
+}
+
 func (class *Class) IsArray() bool {
 	return class.name[0] == '['
 }

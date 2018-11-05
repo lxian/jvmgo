@@ -24,3 +24,15 @@ const (
 	ARR_FLOAT  = "[F"
 	ARR_DOUBLE = "[D"
 )
+
+var primitives_mapping = map[string]rune{
+	"boolean": BOOL,
+	"byte":    BYTE,
+	"char":    CHAR,
+	"short":    SHORT,
+	"int":    INT,
+	"long":    LONG,
+	"float":    FLOAT,
+	"double":    DOUBLE,
+	"void":    VOID,
+}

@@ -27,6 +27,10 @@ type Class struct {
 	initStarted bool
 }
 
+func (class *Class) ClassLoader() *ClassLoader {
+	return class.classLoader
+}
+
 func (class *Class) FindStaticMethod(name string, desc string) *Method {
 	for _, method := range class.methods {
 		if method.IsStatic() && method.name == name && method.descriptor == desc {

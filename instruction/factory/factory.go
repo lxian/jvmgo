@@ -15,6 +15,7 @@ import (
 	. "jvmgo/instruction/stack"
 	. "jvmgo/instruction/store"
 	. "jvmgo/instruction/switchjump"
+	. "jvmgo/instruction/array"
 )
 
 // NoOperandsInstruction singletons
@@ -162,7 +163,7 @@ var (
 	dreturn = &DRETURN{}
 	areturn = &ARETURN{}
 	_return = &RETURN{}
-	//arraylength   = &ARRAY_LENGTH{}
+	arraylength   = &ARRAY_LENGTH{}
 	//athrow        = &ATHROW{}
 	//monitorenter  = &MONITOR_ENTER{}
 	//monitorexit   = &MONITOR_EXIT{}
@@ -547,12 +548,12 @@ func NewInstruction(opcode byte) Instruction {
 	//	return &INVOKE_DYNAMIC{}
 	case 0xbb:
 		return &NEW{}
-	//case 0xbc:
-	//	return &NEW_ARRAY{}
-	//case 0xbd:
-	//	return &ANEW_ARRAY{}
-	//case 0xbe:
-	//	return arraylength
+	case 0xbc:
+		return &NEW_ARRAY{}
+	case 0xbd:
+		return &ANEW_ARRAY{}
+	case 0xbe:
+		return arraylength
 	//case 0xbf:
 	//	return athrow
 	case 0xc0:
