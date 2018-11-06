@@ -13,6 +13,3 @@ func (*ARRAY_LENGTH) Execute(frame *rtda.Frame) {
 	arr := frame.OperandStack().PopRef()
 	frame.OperandStack().PushInt(arr.ArrayLength())
 }
-
-
-

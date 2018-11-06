@@ -36,14 +36,27 @@ func (object *Object) Refs() []*Object {
 // length
 func (object *Object) ArrayLength() int32 {
 	switch object.fields.(type) {
-	case []int8: return int32(len(object.fields.([]int8)))
-	case []int16: return int32(len(object.fields.([]int16)))
-	case []int32: return int32(len(object.fields.([]int32)))
-	case []int64: return int32(len(object.fields.([]int64)))
-	case []float32: return int32(len(object.fields.([]float32)))
-	case []float64: return int32(len(object.fields.([]float64)))
-	case []*Object: return int32(len(object.fields.([]*Object)))
+	case []int8:
+		return int32(len(object.fields.([]int8)))
+	case []int16:
+		return int32(len(object.fields.([]int16)))
+	case []int32:
+		return int32(len(object.fields.([]int32)))
+	case []int64:
+		return int32(len(object.fields.([]int64)))
+	case []float32:
+		return int32(len(object.fields.([]float32)))
+	case []float64:
+		return int32(len(object.fields.([]float64)))
+	case []*Object:
+		return int32(len(object.fields.([]*Object)))
 	default:
 		panic("Unrecognized Array type")
+	}
+}
+
+func (object *Object) AssertArrIdx(idx int32) {
+	if idx < 0 || idx >= object.ArrayLength() {
+		panic("java.lang.ArrayIndexOutOfBoundsException")
 	}
 }

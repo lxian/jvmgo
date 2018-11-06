@@ -21,7 +21,6 @@ func (inst *INVOKE_STATIC) Execute(frame *rtda.Frame) {
 		return
 	}
 
-
 	// skip native methods register for now
 	if method.Name() == "registerNatives" && method.Descriptor() == "()V" {
 		frame.Thread().PopFrame()

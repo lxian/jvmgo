@@ -83,14 +83,14 @@ func (loader *ClassLoader) resolveInterfaces(class *Class) []*Class {
 
 func (loader *ClassLoader) loadArrayClass(name string) *Class {
 	return &Class{
-		classLoader:loader,
+		classLoader: loader,
 		accessFlags: ACC_PUBLIC, // TODO
-		name: name,
-		initStarted:true,
-		superClass: loader.LoadClass("java/lang/Object"),
+		name:        name,
+		initStarted: true,
+		superClass:  loader.LoadClass("java/lang/Object"),
 		interfaces: []*Class{
-			loader.LoadClass("java/lang/Clonable"),
-			loader.LoadClass("java/lang/Serializable"),
+			loader.LoadClass("java/lang/Cloneable"),
+			loader.LoadClass("java/io/Serializable"),
 		},
 	}
 }

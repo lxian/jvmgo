@@ -34,16 +34,22 @@ func (inst *NEW_ARRAY) Execute(frame *rtda.Frame) {
 
 func arrayClassType(atype uint8, loader *heap.ClassLoader) *heap.Class {
 	switch atype {
-	case T_BOOLEAN: return loader.LoadClass(heap.ARR_BOOL)
-	case T_CHAR: return loader.LoadClass(heap.ARR_CHAR)
-	case T_FLOAT: return loader.LoadClass(heap.ARR_FLOAT)
-	case T_DOUBLE: return loader.LoadClass(heap.ARR_DOUBLE)
-	case T_BYTE: return loader.LoadClass(heap.ARR_BYTE)
-	case T_SHORT: return loader.LoadClass(heap.ARR_SHORT)
-	case T_INT: return loader.LoadClass(heap.ARR_INT)
-	case T_LONG: return loader.LoadClass(heap.ARR_LONG)
+	case T_BOOLEAN:
+		return loader.LoadClass(heap.ARR_BOOL)
+	case T_CHAR:
+		return loader.LoadClass(heap.ARR_CHAR)
+	case T_FLOAT:
+		return loader.LoadClass(heap.ARR_FLOAT)
+	case T_DOUBLE:
+		return loader.LoadClass(heap.ARR_DOUBLE)
+	case T_BYTE:
+		return loader.LoadClass(heap.ARR_BYTE)
+	case T_SHORT:
+		return loader.LoadClass(heap.ARR_SHORT)
+	case T_INT:
+		return loader.LoadClass(heap.ARR_INT)
+	case T_LONG:
+		return loader.LoadClass(heap.ARR_LONG)
 	}
-	panic("Invalid atype "+string(atype))
+	panic("Invalid atype " + string(atype))
 }
-
-

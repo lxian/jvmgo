@@ -21,7 +21,3 @@ func (inst *ANEW_ARRAY) Execute(frame *rtda.Frame) {
 
 	frame.OperandStack().PushRef(arr)
 }
-
-
-
-

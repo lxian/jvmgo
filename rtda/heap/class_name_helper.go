@@ -26,6 +26,3 @@ func getPrimitiveTypes(className string) (string, bool) {
 		return "", false
 	}
 }
-
-
-
