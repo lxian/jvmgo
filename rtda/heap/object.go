@@ -1,16 +1,16 @@
 package heap
 
 type Object struct {
-	class  *Class
-	fields interface{}
+	class *Class
+	vars  interface{}
 }
 
 func (object *Object) Class() *Class {
 	return object.class
 }
 
-func (object *Object) Fields() Slots {
-	return object.fields.(Slots)
+func (object *Object) Vars() Slots {
+	return object.vars.(Slots)
 }
 func (object *Object) IsInstanceOf(other *Class) bool {
 	clz := object.class
@@ -23,7 +23,25 @@ func (class *Class) NewObject() *Object {
 
 func newObject(class *Class) *Object {
 	return &Object{
-		class:  class,
-		fields: newSlots(class.instanceSlotCount),
+		class: class,
+		vars:  newSlots(class.instanceSlotCount),
 	}
+}
+
+func (object *Object) SetRefVar(fieldName string, fieldDesc string, value *Object) {
+	for _, field := range object.Class().fields {
+		if !field.isStatic() && field.name == fieldName && field.descriptor == fieldDesc {
+			object.Vars()[field.slotId].ref = value
+			return
+		}
+	}
+}
+
+func (object *Object) GetRefVar(fieldName string, fieldDesc string) *Object {
+	for _, field := range object.Class().fields {
+		if !field.isStatic() && field.name == fieldName && field.descriptor == fieldDesc {
+			return object.Vars()[field.slotId].ref
+		}
+	}
+	return nil
 }

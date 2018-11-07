@@ -33,27 +33,27 @@ func (inst *PUT_FIELD) Execute(frame *rtda.Frame) {
 		val := frame.OperandStack().PopInt()
 		object := frame.OperandStack().PopRef()
 		validateObjField(object, clz, field)
-		object.Fields().SetInt(slotId, val)
+		object.Vars().SetInt(slotId, val)
 	case heap.LONG:
 		val := frame.OperandStack().PopLong()
 		object := frame.OperandStack().PopRef()
 		validateObjField(object, clz, field)
-		object.Fields().SetLong(slotId, val)
+		object.Vars().SetLong(slotId, val)
 	case heap.FLOAT:
 		val := frame.OperandStack().PopFloat()
 		object := frame.OperandStack().PopRef()
 		validateObjField(object, clz, field)
-		object.Fields().SetFloat(slotId, val)
+		object.Vars().SetFloat(slotId, val)
 	case heap.DOUBLE:
 		val := frame.OperandStack().PopDouble()
 		object := frame.OperandStack().PopRef()
 		validateObjField(object, clz, field)
-		object.Fields().SetDouble(slotId, val)
+		object.Vars().SetDouble(slotId, val)
 	case heap.OBJECT, heap.ARRAY:
 		val := frame.OperandStack().PopRef()
 		object := frame.OperandStack().PopRef()
 		validateObjField(object, clz, field)
-		object.Fields().SetRef(slotId, val)
+		object.Vars().SetRef(slotId, val)
 	}
 }
 
@@ -72,14 +72,14 @@ func (inst *GET_FIELD) Execute(frame *rtda.Frame) {
 	slotId := field.SlotId()
 	switch field.Descriptor()[0] {
 	case heap.BOOL, heap.SHORT, heap.CHAR, heap.INT:
-		frame.OperandStack().PushInt(object.Fields().GetInt(slotId))
+		frame.OperandStack().PushInt(object.Vars().GetInt(slotId))
 	case heap.LONG:
-		frame.OperandStack().PushLong(object.Fields().GetLong(slotId))
+		frame.OperandStack().PushLong(object.Vars().GetLong(slotId))
 	case heap.FLOAT:
-		frame.OperandStack().PushFloat(object.Fields().GetFloat(slotId))
+		frame.OperandStack().PushFloat(object.Vars().GetFloat(slotId))
 	case heap.DOUBLE:
-		frame.OperandStack().PushDouble(object.Fields().GetDouble(slotId))
+		frame.OperandStack().PushDouble(object.Vars().GetDouble(slotId))
 	case heap.OBJECT, heap.ARRAY:
-		frame.OperandStack().PushRef(object.Fields().GetRef(slotId))
+		frame.OperandStack().PushRef(object.Vars().GetRef(slotId))
 	}
 }

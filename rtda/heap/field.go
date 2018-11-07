@@ -30,6 +30,10 @@ func (field *Field) copyAttributes(fieldInfo *classfile.MemberInfo) {
 	}
 }
 
+func (field *Field) isStatic() bool {
+	return HasFlag(field.accessFlags, ACC_STATIC)
+}
+
 func (field *Field) isAccessibleTo(class *Class) bool {
 	if HasFlag(field.accessFlags, ACC_PUBLIC) {
 		return true

@@ -58,6 +58,8 @@ func newConstant(cp *ConstantPool, constantInfo classfile.ConstantInfo) Constant
 		return newInterfaceMethodRef(cp, constantInfo.(*classfile.ConstantInterfaceMethodRefInfo))
 	case *classfile.ConstantNameAndType:
 		return newNameAndType(cp, constantInfo.(*classfile.ConstantNameAndType))
+	case *classfile.ConstantInvokeDynamicInfo, *classfile.ConstantMethodHandleInfo, *classfile.ConstantMethodTypeInfo:
+		return nil // TODO
 	}
 	panic(fmt.Sprintf("Unrecognized constant type %v", constantInfo))
 }

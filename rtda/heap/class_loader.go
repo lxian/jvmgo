@@ -176,6 +176,8 @@ func initStaticVar(class *Class, field *Field) {
 			class.staticVars.SetDouble(field.slotId, constVal.(float64))
 		case "J":
 			class.staticVars.SetLong(field.slotId, constVal.(int64))
+		case "Ljava/lang/String;":
+			class.staticVars.SetRef(field.slotId, InternedJString(constVal.(string), class.classLoader))
 		default:
 			panic(fmt.Sprintf("Field %v Constant Value: Bad descriptor", field))
 		}

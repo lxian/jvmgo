@@ -1,7 +1,5 @@
 package heap
 
-import "golang.org/x/tools/go/loader"
-
 func (class *Class) IsSubClassOf(other *Class) bool {
 	if class == other {
 		return true

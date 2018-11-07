@@ -55,7 +55,7 @@ func (*CASTORE) Execute(frame *rtda.Frame) {
 	idx := frame.OperandStack().PopInt()
 	arr := frame.OperandStack().PopRef()
 	arr.AssertArrIdx(idx)
-	arr.Chars()[idx] = int16(val)
+	arr.Chars()[idx] = uint16(val)
 }
 
 func (*DASTORE) Execute(frame *rtda.Frame) {

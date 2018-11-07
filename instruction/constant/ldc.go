@@ -1,9 +1,10 @@
-package reference
+package constant
 
 import (
 	"fmt"
 	"jvmgo/instruction"
 	"jvmgo/rtda"
+	"jvmgo/rtda/heap"
 )
 
 func ldc(idx uint, frame *rtda.Frame) {
@@ -13,6 +14,8 @@ func ldc(idx uint, frame *rtda.Frame) {
 		frame.OperandStack().PushInt(val.(int32))
 	case float32:
 		frame.OperandStack().PushFloat(val.(float32))
+	case string:
+		frame.OperandStack().PushRef(heap.InternedJString(val.(string), frame.Method().Class().ClassLoader()))
 	default:
 		panic(fmt.Sprintf("todo ldc %v", val))
 	}
