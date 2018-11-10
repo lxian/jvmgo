@@ -40,6 +40,8 @@ func (object *Object) ArrayLength() int32 {
 		return int32(len(object.vars.([]int8)))
 	case []int16:
 		return int32(len(object.vars.([]int16)))
+	case []uint16:
+		return int32(len(object.vars.([]uint16)))
 	case []int32:
 		return int32(len(object.vars.([]int32)))
 	case []int64:

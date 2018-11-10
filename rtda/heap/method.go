@@ -34,6 +34,10 @@ func (method *Method) IsPrivate() bool {
 	return HasFlag(method.accessFlags, ACC_PRIVATE)
 }
 
+func (method *Method) IsNative() bool {
+	return HasFlag(method.accessFlags, ACC_NATIVE)
+}
+
 func (method *Method) ArgsSlotCount() uint {
 	return method.argsSlotCount
 }
@@ -50,8 +54,7 @@ func (method *Method) MaxLocals() uint {
 	return method.maxLocals
 }
 
-func (method *Method) calcArgsCount() {
-	methodDescriptor := parseMethodDescriptors(method.descriptor)
+func (method *Method) calcArgsCount(methodDescriptor *MethodDescriptor) {
 	var cnt uint = 0
 	for _, paramType := range methodDescriptor.paramTypes {
 		switch paramType {
@@ -91,19 +94,28 @@ func (method *Method) IsAccessibleTo(otherClz *Class) bool {
 func newMethods(class *Class, methodInfos []*classfile.MemberInfo) []*Method {
 	methods := make([]*Method, len(methodInfos))
 	for i, info := range methodInfos {
-		method := &Method{}
-		method.copyInfoFromMemberInfo(info)
-		method.class = class
-
-		if code := info.FindCodeAttribute(); code != nil {
-			method.maxLocals = uint(code.MaxLocals())
-			method.maxStack = uint(code.MaxStack())
-			method.code = code.Code()
-		}
-
-		methods[i] = method
-		methods[i].calcArgsCount()
+		methods[i] = newMethod(class, info)
 	}
 
 	return methods
+}
+
+func newMethod(class *Class, info *classfile.MemberInfo) *Method {
+	method := &Method{}
+	method.copyInfoFromMemberInfo(info)
+	method.class = class
+
+	if code := info.FindCodeAttribute(); code != nil {
+		method.maxLocals = uint(code.MaxLocals())
+		method.maxStack = uint(code.MaxStack())
+		method.code = code.Code()
+	}
+
+	methodDescriptor := parseMethodDescriptors(method.descriptor)
+	method.calcArgsCount(methodDescriptor)
+
+	if method.IsNative() {
+		method.InjectNativeCodeAttr(methodDescriptor.returnType)
+	}
+	return method
 }

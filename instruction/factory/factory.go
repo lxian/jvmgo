@@ -167,7 +167,7 @@ var (
 	//athrow        = &ATHROW{}
 	//monitorenter  = &MONITOR_ENTER{}
 	//monitorexit   = &MONITOR_EXIT{}
-	//invoke_native = &INVOKE_NATIVE{}
+	invoke_native = &INVOKE_NATIVE{}
 )
 
 func NewInstruction(opcode byte) Instruction {
@@ -577,8 +577,8 @@ func NewInstruction(opcode byte) Instruction {
 	//case 0xc9:
 	//	return &JSR_W{}
 	//	//case 0xca: todo breakpoint
-	//case 0xfe:
-	//	return invoke_native // impdep1
+	case 0xfe:
+		return invoke_native // impdep1
 	//case 0xff:
 	//	return &BOOTSTRAP{} // impdep2
 	default:

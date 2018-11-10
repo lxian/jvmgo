@@ -5,6 +5,7 @@ public class StringTest {
     public static void main(String[] args) {
         String s1 = "xyz"; // ldc
 
+        System.out.println(new StringTest().hashCode());
         System.out.println(STR);
         System.out.println(s1);
         //String s2 = "abc1";
