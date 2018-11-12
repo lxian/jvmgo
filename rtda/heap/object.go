@@ -3,6 +3,7 @@ package heap
 type Object struct {
 	class *Class
 	vars  interface{}
+	extra interface{}
 }
 
 func (object *Object) Class() *Class {

@@ -25,6 +25,12 @@ type Class struct {
 	staticVars        Slots
 	// class init
 	initStarted bool
+	// runtime java.lang.Class object reference
+	jClassObj *Object
+}
+
+func (class *Class) JClassObj() *Object {
+	return class.jClassObj
 }
 
 func (class *Class) ClassLoader() *ClassLoader {

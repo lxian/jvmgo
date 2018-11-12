@@ -13,7 +13,36 @@ type ClassLoader struct {
 }
 
 func NewClassLaoder(cp *classpath.Classpath, verboseClass bool) *ClassLoader {
-	return &ClassLoader{classPath: cp, classMap: make(map[string]*Class), verboseClass: verboseClass}
+	loader := &ClassLoader{classPath: cp, classMap: make(map[string]*Class), verboseClass: verboseClass}
+	loader.LoadBasicClasses()
+	return loader
+}
+
+func (loader *ClassLoader) loadPrimitiveClasses() {
+	for primitiveType := range primitives_mapping {
+		loader.loadPrimitiveClass(primitiveType)
+	}
+}
+
+func (loader *ClassLoader) loadPrimitiveClass(className string) {
+	class := &Class{
+		classLoader: loader,
+		accessFlags: ACC_PUBLIC,
+		name:        className,
+		initStarted: true,
+	}
+	class.jClassObj = loader.classMap["Ljava/lang/Class;"].NewObject()
+	class.jClassObj.extra = class
+}
+
+func (loader *ClassLoader) LoadBasicClasses() {
+	jClzClz := loader.LoadClass("Ljava/lang/Class;")
+	for _, clz := range loader.classMap {
+		if clz.jClassObj == nil {
+			clz.jClassObj = jClzClz.NewObject()
+			clz.jClassObj.extra = clz
+		}
+	}
 }
 
 func (loader *ClassLoader) LoadClass(className string) *Class {
@@ -26,6 +55,11 @@ func (loader *ClassLoader) LoadClass(className string) *Class {
 		class = loader.loadArrayClass(className)
 	} else {
 		class = loader.loadNonArrayClass(className)
+	}
+
+	if jClzClz, ok := loader.classMap["Ljava/lang/Class;"]; ok {
+		class.jClassObj = jClzClz.NewObject()
+		class.jClassObj.extra = class
 	}
 
 	loader.classMap[class.name] = class
