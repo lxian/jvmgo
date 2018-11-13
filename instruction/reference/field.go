@@ -10,9 +10,9 @@ func validateObjField(object *heap.Object, class *heap.Class, field *heap.Field)
 	if object == nil {
 		panic("Null pointer exception")
 	}
-	if class != object.Class() {
-		panic("Get Field reference to a different class")
-	}
+	//if class != object.Class() {
+	//	panic("Get Field reference to a different class")
+	//}
 	if heap.HasFlag(field.AccessFlags(), heap.ACC_STATIC) {
 		panic("Non static operation on static field")
 	}

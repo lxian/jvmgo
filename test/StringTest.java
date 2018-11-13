@@ -3,6 +3,11 @@ public class StringTest {
     public static final String STR = "abc";
 
     public static void main(String[] args) {
+        String a1 = "Hello";
+        String a2 = "Demo";
+        String a3 = a1 + a2;
+        System.out.println(a3);
+
         String s1 = "xyz"; // ldc
 
         System.out.println(new StringTest().hashCode());

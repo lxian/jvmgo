@@ -1,12 +1,10 @@
 package heap
 
 func (class *Class) IsSubClassOf(other *Class) bool {
-	if class == other {
-		return true
-	}
-
-	if class.superClass != nil {
-		return class.superClass.IsSubClassOf(other)
+	for c := class.superClass; c != nil; c = c.superClass {
+		if c == other {
+			return true
+		}
 	}
 	return false
 }

@@ -45,3 +45,8 @@ func (class *Class) ComponentClass() *Class {
 func (class *Class) IsArray() bool {
 	return class.name[0] == '['
 }
+
+func (class *Class) IsPrimitive() bool {
+	_, ok := primitives_mapping[class.name]
+	return ok
+}

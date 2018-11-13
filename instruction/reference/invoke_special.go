@@ -30,7 +30,7 @@ func (inst *INVOKE_SPECIAL) Execute(frame *rtda.Frame) {
 	if heap.HasFlag(invokerClz.AccessFlags(), heap.ACC_SUPER) &&
 		invokerClz.IsSubClassOf(resolvedClz) &&
 		method.Name() != "<init>" {
-		method = heap.LookupMethodInClass(invokerClz, method.Name(), method.Descriptor())
+		method = heap.LookupMethodInClass(invokerClz.SuperClass(), method.Name(), method.Descriptor())
 	}
 
 	if method == nil || heap.HasFlag(method.AccessFlags(), heap.ACC_ABSTRACT) {
