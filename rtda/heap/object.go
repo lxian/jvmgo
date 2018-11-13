@@ -6,6 +6,10 @@ type Object struct {
 	extra interface{}
 }
 
+func (object *Object) Extra() interface{} {
+	return object.extra
+}
+
 func (object *Object) Class() *Class {
 	return object.class
 }

@@ -13,7 +13,7 @@ func (class *Class) NewArray(count uint) *Object {
 	case ARR_BYTE:
 		obj.vars = make([]int8, count)
 	case ARR_CHAR:
-		obj.vars = make([]int16, count)
+		obj.vars = make([]uint16, count)
 	case ARR_SHORT:
 		obj.vars = make([]int16, count)
 	case ARR_INT:
@@ -32,14 +32,14 @@ func (class *Class) NewArray(count uint) *Object {
 
 func (class *Class) ArrayClass() *Class {
 	arrClzName := getArrayClassName(class.name)
-	return class.classLoader.loadArrayClass(arrClzName)
+	return class.classLoader.LoadClass(arrClzName)
 }
 
 func (class *Class) ComponentClass() *Class {
 	if !class.IsArray() {
 		return nil
 	}
-	return class.classLoader.loadArrayClass(class.name[1:])
+	return class.classLoader.LoadClass(class.name[1:])
 }
 
 func (class *Class) IsArray() bool {

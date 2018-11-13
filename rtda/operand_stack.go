@@ -89,3 +89,14 @@ func (stack *OperandStack) PopRef() *heap.Object {
 	stack.operands[stack.size].ref = nil
 	return val
 }
+
+func (stack *OperandStack) PushBoolean(val bool) {
+	if val {
+		stack.PushInt(1)
+	} else {
+		stack.PushInt(0)
+	}
+}
+func (stack *OperandStack) PopBoolean() bool {
+	return stack.PopInt() == 1
+}

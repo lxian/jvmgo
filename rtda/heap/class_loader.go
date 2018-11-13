@@ -15,6 +15,7 @@ type ClassLoader struct {
 func NewClassLaoder(cp *classpath.Classpath, verboseClass bool) *ClassLoader {
 	loader := &ClassLoader{classPath: cp, classMap: make(map[string]*Class), verboseClass: verboseClass}
 	loader.LoadBasicClasses()
+	loader.loadPrimitiveClasses()
 	return loader
 }
 
@@ -31,12 +32,13 @@ func (loader *ClassLoader) loadPrimitiveClass(className string) {
 		name:        className,
 		initStarted: true,
 	}
-	class.jClassObj = loader.classMap["Ljava/lang/Class;"].NewObject()
+	class.jClassObj = loader.classMap["java/lang/Class"].NewObject()
 	class.jClassObj.extra = class
+	loader.classMap[className] = class
 }
 
 func (loader *ClassLoader) LoadBasicClasses() {
-	jClzClz := loader.LoadClass("Ljava/lang/Class;")
+	jClzClz := loader.LoadClass("java/lang/Class")
 	for _, clz := range loader.classMap {
 		if clz.jClassObj == nil {
 			clz.jClassObj = jClzClz.NewObject()
@@ -57,7 +59,7 @@ func (loader *ClassLoader) LoadClass(className string) *Class {
 		class = loader.loadNonArrayClass(className)
 	}
 
-	if jClzClz, ok := loader.classMap["Ljava/lang/Class;"]; ok {
+	if jClzClz, ok := loader.classMap["java/lang/Class"]; ok {
 		class.jClassObj = jClzClz.NewObject()
 		class.jClassObj.extra = class
 	}

@@ -11,7 +11,7 @@ func InternedJString(gostr string, loader *ClassLoader) *Object {
 	}
 
 	chars := stringToUTF16(gostr)
-	charArr := &Object{loader.LoadClass("[C"), chars}
+	charArr := &Object{loader.LoadClass("[C"), chars, nil}
 
 	jstr := loader.LoadClass("java/lang/String").NewObject()
 	jstr.SetRefVar("value", "[C", charArr)
@@ -22,6 +22,10 @@ func InternedJString(gostr string, loader *ClassLoader) *Object {
 
 func GoString(jstr *Object) string {
 	return string(utf16.Decode(jstr.GetRefVar("value", "[C").Chars()))
+}
+
+func JString(goStr string, loader *ClassLoader) *Object {
+	return InternedJString(goStr, loader)
 }
 
 func stringToUTF16(s string) []uint16 {

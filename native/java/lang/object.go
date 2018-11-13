@@ -8,7 +8,7 @@ import (
 
 func init() {
 	native.RegisterNativeMethod("java/lang/Object", "hashCode", "()I", hashCode)
-	native.RegisterNativeMethod("java/lang/Object", "getClass", "()Ljava/lang/Class;", hashCode)
+	native.RegisterNativeMethod("java/lang/Object", "getClass", "()Ljava/lang/Class;", getClass)
 }
 
 func hashCode(frame *rtda.Frame) {

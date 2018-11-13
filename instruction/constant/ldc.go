@@ -16,6 +16,8 @@ func ldc(idx uint, frame *rtda.Frame) {
 		frame.OperandStack().PushFloat(val.(float32))
 	case string:
 		frame.OperandStack().PushRef(heap.InternedJString(val.(string), frame.Method().Class().ClassLoader()))
+	case *heap.ClassRef:
+		frame.OperandStack().PushRef(val.(*heap.ClassRef).ResolvedClass().JClassObj())
 	default:
 		panic(fmt.Sprintf("todo ldc %v", val))
 	}

@@ -1,5 +1,7 @@
 package heap
 
+import "strings"
+
 func getArrayClassName(className string) string {
 	return "[" + getDescriptor(className)
 }
@@ -25,4 +27,8 @@ func getPrimitiveTypes(className string) (string, bool) {
 	} else {
 		return "", false
 	}
+}
+
+func GetJavaClassName(className string) string {
+	return strings.Replace(className, "/", ".", -1)
 }
