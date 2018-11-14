@@ -39,7 +39,8 @@ func (class *Class) ComponentClass() *Class {
 	if !class.IsArray() {
 		return nil
 	}
-	return class.classLoader.LoadClass(class.name[1:])
+	compClz := getComponentClassName(class.name)
+	return class.classLoader.LoadClass(compClz)
 }
 
 func (class *Class) IsArray() bool {

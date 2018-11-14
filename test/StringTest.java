@@ -4,8 +4,11 @@ public class StringTest {
 
     public static void main(String[] args) {
         String a1 = "Hello";
+        System.out.println(a1);
         String a2 = "Demo";
         String a3 = a1 + a2;
+        System.out.println(a1);
+        System.out.println(a2);
         System.out.println(a3);
 
         String s1 = "xyz"; // ldc

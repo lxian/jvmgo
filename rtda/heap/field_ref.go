@@ -51,5 +51,5 @@ func lookupFiled(class *Class, name string, desc string) *Field {
 		}
 	}
 
-	panic("No such field error")
+	return nil
 }

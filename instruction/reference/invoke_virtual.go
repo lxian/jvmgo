@@ -54,7 +54,8 @@ func checkAndHackPrintln(obj *heap.Object, method *heap.Method, frame *rtda.Fram
 			case "(F)V":
 				fmt.Printf("%v\n", frame.OperandStack().PopFloat())
 			case "(Ljava/lang/String;)V":
-				gostr := heap.GoString(frame.OperandStack().PopRef())
+				jstr := frame.OperandStack().PopRef()
+				gostr := heap.GoString(jstr)
 				fmt.Printf("%v\n", gostr)
 			default:
 				panic("println: " + method.Descriptor())
