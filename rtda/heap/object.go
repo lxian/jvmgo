@@ -50,3 +50,14 @@ func (object *Object) GetRefVar(fieldName string, fieldDesc string) *Object {
 	}
 	return nil
 }
+
+func (object *Object) GetObjectMethod(name string, desc string) *Method {
+	for clz := object.class; clz != nil; clz = clz.superClass {
+		for _, method := range clz.methods {
+			if !method.IsStatic() && method.name == name && method.descriptor == desc {
+				return method
+			}
+		}
+	}
+	return nil
+}

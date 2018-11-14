@@ -1,14 +1,19 @@
 public class BubbleSortTest {
     public static void main(String[] args) {
-        int[] arr = {
-            22, 84, 77, 11, 95,  9, 78, 56,
-            36, 97, 65, 36, 10, 24 ,92, 48
-        };
+        Integer[] irr = new Integer[]{100, 234, 545};
+        for (int i:irr) {
+            System.out.println(i);
+        }
 
+        //int[] arr = {
+        //    22, 84, 77, 11, 95,  9, 78, 56,
+        //    36, 97, 65, 36, 10, 24 ,92, 48
+        //};
+
+        ////printArray(arr);
+        //bubbleSort(arr);
+        ////System.out.println(123456789);
         //printArray(arr);
-        bubbleSort(arr);
-        //System.out.println(123456789);
-        printArray(arr);
     }
 
     private static void bubbleSort(int[] arr) {

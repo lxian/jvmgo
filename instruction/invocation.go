@@ -7,7 +7,7 @@ import (
 
 func Invoke(method *heap.Method, frame *rtda.Frame) {
 	thread := frame.Thread()
-	newFrame := rtda.NewFrame(frame.Thread(), method)
+	newFrame := rtda.NewFrame(thread, method)
 
 	for i := int(method.ArgsSlotCount() - 1); i >= 0; i-- {
 		slot := frame.OperandStack().PopSlot()

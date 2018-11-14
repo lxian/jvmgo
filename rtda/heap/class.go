@@ -37,6 +37,15 @@ func (class *Class) ClassLoader() *ClassLoader {
 	return class.classLoader
 }
 
+func (class *Class) FindStaticVarRef(name string, desc string) *Object {
+	for _, field := range class.fields {
+		if field.isStatic() && field.name == name && field.descriptor == desc {
+			return class.staticVars.GetRef(field.slotId)
+		}
+	}
+	return nil
+}
+
 func (class *Class) FindStaticMethod(name string, desc string) *Method {
 	for _, method := range class.methods {
 		if method.IsStatic() && method.name == name && method.descriptor == desc {
