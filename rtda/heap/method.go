@@ -8,6 +8,11 @@ type Method struct {
 	maxStack      uint
 	argsSlotCount uint
 	code          []byte
+	exceptionTable ExceptionTable
+}
+
+func (method *Method) ExceptionTable() ExceptionTable {
+	return method.exceptionTable
 }
 
 func (method *Method) IsAbstract() bool {
@@ -106,9 +111,7 @@ func newMethod(class *Class, info *classfile.MemberInfo) *Method {
 	method.class = class
 
 	if code := info.FindCodeAttribute(); code != nil {
-		method.maxLocals = uint(code.MaxLocals())
-		method.maxStack = uint(code.MaxStack())
-		method.code = code.Code()
+		copyCodeAttr(method, code)
 	}
 
 	methodDescriptor := parseMethodDescriptors(method.descriptor)
@@ -119,3 +122,13 @@ func newMethod(class *Class, info *classfile.MemberInfo) *Method {
 	}
 	return method
 }
+
+func copyCodeAttr(method *Method, code *classfile.CodeAttribute) {
+	method.maxLocals = uint(code.MaxLocals())
+	method.maxStack = uint(code.MaxStack())
+	method.code = code.Code()
+
+	cp := method.Class().ConstantPool()
+	method.exceptionTable = newExceptionTable(cp, code)
+}
+

@@ -7,6 +7,22 @@ type ExceptionEntry struct {
 	catchType uint16
 }
 
+func (e *ExceptionEntry) CatchType() uint16 {
+	return e.catchType
+}
+
+func (e *ExceptionEntry) HandlerPc() uint16 {
+	return e.handlerPc
+}
+
+func (e *ExceptionEntry) EndPc() uint16 {
+	return e.endPc
+}
+
+func (e *ExceptionEntry) StartPc() uint16 {
+	return e.startPc
+}
+
 type CodeAttribute struct {
 	constantPool   ConstantPool
 	maxStack       uint16
@@ -14,6 +30,10 @@ type CodeAttribute struct {
 	code           []byte
 	exceptionTable []ExceptionEntry
 	attributes     []AttributeInfo
+}
+
+func (attr *CodeAttribute) ExceptionTable() []ExceptionEntry {
+	return attr.exceptionTable
 }
 
 func (attr *CodeAttribute) readInfo(reader *ClassReader) {

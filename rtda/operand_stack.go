@@ -14,6 +14,10 @@ func newOperandStack(maxOperandStackSize uint) *OperandStack {
 	return &OperandStack{size: 0, operands: make([]Slot, maxOperandStackSize)}
 }
 
+func (stack *OperandStack) Clear() {
+	stack.size = 0
+}
+
 // Slot
 func (stack *OperandStack) PeekSlot() Slot {
 	return stack.operands[stack.size-1]

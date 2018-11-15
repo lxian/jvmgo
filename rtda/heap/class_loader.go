@@ -48,8 +48,8 @@ func (loader *ClassLoader) LoadBasicClasses() {
 }
 
 func (loader *ClassLoader) LoadClass(className string) *Class {
-	if loader.classMap[className] != nil {
-		return loader.classMap[className]
+	if class, ok := loader.classMap[className]; ok {
+		return class
 	}
 
 	var class *Class
