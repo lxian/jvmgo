@@ -44,3 +44,23 @@ func newAttributeInstance(attrName string, attrLen uint32, constantPool Constant
 		return &UnparsedAttribute{name: attrName, length: attrLen}
 	}
 }
+
+func FindLineNumberTableAttribute(attrs []AttributeInfo) *LineNumberTableAttribute {
+	for _, attr := range attrs {
+		switch attr.(type) {
+		case *LineNumberTableAttribute:
+			return attr.(*LineNumberTableAttribute)
+		}
+	}
+	return nil
+}
+
+func FindSourceFileAttr(attrs []AttributeInfo) *SourceFileAttribute {
+	for _, attr := range attrs {
+		switch attr.(type) {
+		case *SourceFileAttribute:
+			return attr.(*SourceFileAttribute)
+		}
+	}
+	return nil
+}

@@ -42,4 +42,3 @@ func getCatchClass(cp *ConstantPool, catchTypeIdx uint) *ClassRef {
 	}
 	return cp.GetConstant(catchTypeIdx).(*ClassRef)
 }
-

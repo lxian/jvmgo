@@ -1,5 +1,7 @@
 package classfile
 
+import "golang.org/x/tools/go/analysis/passes/pkgfact/testdata/src/c"
+
 type ExceptionEntry struct {
 	startPc   uint16
 	endPc     uint16
@@ -30,6 +32,10 @@ type CodeAttribute struct {
 	code           []byte
 	exceptionTable []ExceptionEntry
 	attributes     []AttributeInfo
+}
+
+func (attr *CodeAttribute) Attributes() []AttributeInfo {
+	return attr.attributes
 }
 
 func (attr *CodeAttribute) ExceptionTable() []ExceptionEntry {

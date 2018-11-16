@@ -3,9 +3,9 @@ package reference
 import (
 	"jvmgo/instruction"
 	"jvmgo/native"
-	"jvmgo/rtda"
 	_ "jvmgo/native/java/lang"
 	_ "jvmgo/native/sun/misc"
+	"jvmgo/rtda"
 )
 
 type INVOKE_NATIVE struct {

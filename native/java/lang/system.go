@@ -1,8 +1,8 @@
 package lang
 
 import (
-	"jvmgo/rtda"
 	"jvmgo/native"
+	"jvmgo/rtda"
 	"jvmgo/rtda/heap"
 )
 
@@ -33,7 +33,7 @@ func arraycopy(frame *rtda.Frame) {
 	}
 
 	// index bounds checking
-	if (src.ArrayLength() < srcPos + length) || (dest.ArrayLength() < destPos + length) {
+	if (src.ArrayLength() < srcPos+length) || (dest.ArrayLength() < destPos+length) {
 		panic("java.lang.IndexOutOfBoundsException")
 	}
 

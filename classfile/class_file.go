@@ -2,6 +2,7 @@ package classfile
 
 import (
 	"fmt"
+	"golang.org/x/tools/go/analysis/passes/pkgfact/testdata/src/c"
 )
 
 type ClassFile struct {
@@ -105,6 +106,11 @@ func (classFile *ClassFile) ConstantPool() ConstantPool {
 func (classFile *ClassFile) Methods() []*MemberInfo {
 	return classFile.methods
 }
+
 func (file *ClassFile) Field() []*MemberInfo {
 	return file.fields
+}
+
+func (file *ClassFile) Attributes() []AttributeInfo {
+	return file.attributes
 }

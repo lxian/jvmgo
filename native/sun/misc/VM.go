@@ -1,10 +1,10 @@
 package misc
 
 import (
+	"jvmgo/instruction"
 	"jvmgo/native"
 	"jvmgo/rtda"
 	"jvmgo/rtda/heap"
-	"jvmgo/instruction"
 )
 
 func init() {

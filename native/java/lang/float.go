@@ -1,9 +1,9 @@
 package lang
 
 import (
+	"jvmgo/native"
 	"jvmgo/rtda"
 	"math"
-	"jvmgo/native"
 )
 
 func init() {

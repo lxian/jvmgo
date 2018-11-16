@@ -21,5 +21,5 @@ func FindNativeMethod(className, methodName, methodDescriptor string) NativeMeth
 		return EmptyNativeMethod
 	}
 
-  	panic("java.lang.UnsatisfiedLinkError: " + key)
+	panic("java.lang.UnsatisfiedLinkError: " + key)
 }

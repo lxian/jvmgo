@@ -164,7 +164,7 @@ var (
 	areturn     = &ARETURN{}
 	_return     = &RETURN{}
 	arraylength = &ARRAY_LENGTH{}
-	athrow        = &ATHROW{}
+	athrow      = &ATHROW{}
 	//monitorenter  = &MONITOR_ENTER{}
 	//monitorexit   = &MONITOR_EXIT{}
 	invoke_native = &INVOKE_NATIVE{}

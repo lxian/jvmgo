@@ -3,6 +3,7 @@ package heap
 import (
 	"jvmgo/classfile"
 	"strings"
+	"golang.org/x/tools/go/analysis/passes/pkgfact/testdata/src/c"
 )
 
 type Class struct {
@@ -27,6 +28,12 @@ type Class struct {
 	initStarted bool
 	// runtime java.lang.Class object reference
 	jClassObj *Object
+	// clz file infos
+	sourceFileName string
+}
+
+func (class *Class) SourceFileName() string {
+	return class.sourceFileName
 }
 
 func (class *Class) JClassObj() *Object {
@@ -91,17 +98,23 @@ func (class *Class) ConstantPool() *ConstantPool {
 	return class.constantPool
 }
 
-func newClass(classfile *classfile.ClassFile) *Class {
+func newClass(clsfile *classfile.ClassFile) *Class {
 	cls := &Class{}
 	// basic info
-	cls.accessFlags = classfile.AccessFlags()
-	cls.name = classfile.ClassName()
-	cls.superClassName = classfile.SuperClassName()
-	cls.interfaceNames = classfile.InterfaceNames()
+	cls.accessFlags = clsfile.AccessFlags()
+	cls.name = clsfile.ClassName()
+	cls.superClassName = clsfile.SuperClassName()
+	cls.interfaceNames = clsfile.InterfaceNames()
 	// const pool
-	cls.constantPool = newConstantPool(cls, classfile.ConstantPool())
-	cls.fields = newFields(cls, classfile.Field())
-	cls.methods = newMethods(cls, classfile.Methods())
+	cls.constantPool = newConstantPool(cls, clsfile.ConstantPool())
+	cls.fields = newFields(cls, clsfile.Field())
+	cls.methods = newMethods(cls, clsfile.Methods())
+
+	// clz info
+	cls.sourceFileName = "Unknown"
+	if srcFileAttr := classfile.FindSourceFileAttr(clsfile.Attributes()); srcFileAttr != nil {
+		cls.sourceFileName = srcFileAttr.SourceFileName()
+	}
 
 	return cls
 }

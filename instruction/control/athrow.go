@@ -1,9 +1,9 @@
 package control
 
 import (
+	"fmt"
 	"jvmgo/instruction"
 	"jvmgo/rtda"
-	"fmt"
 )
 
 type ATHROW struct {
@@ -36,6 +36,3 @@ func (*ATHROW) Execute(frame *rtda.Frame) {
 		thread.PopFrame()
 	}
 }
-
-
-

@@ -1,8 +1,8 @@
 package lang
 
 import (
-	"jvmgo/rtda"
 	"jvmgo/native"
+	"jvmgo/rtda"
 	"jvmgo/rtda/heap"
 )
 

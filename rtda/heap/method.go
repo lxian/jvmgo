@@ -4,11 +4,12 @@ import "jvmgo/classfile"
 
 type Method struct {
 	ClassMember
-	maxLocals     uint
-	maxStack      uint
-	argsSlotCount uint
-	code          []byte
+	maxLocals      uint
+	maxStack       uint
+	argsSlotCount  uint
+	code           []byte
 	exceptionTable ExceptionTable
+	lineNumberTable *classfile.LineNumberTableAttribute
 }
 
 func (method *Method) ExceptionTable() ExceptionTable {
@@ -130,5 +131,12 @@ func copyCodeAttr(method *Method, code *classfile.CodeAttribute) {
 
 	cp := method.Class().ConstantPool()
 	method.exceptionTable = newExceptionTable(cp, code)
+	method.lineNumberTable = classfile.FindLineNumberTableAttribute(code.Attributes())
 }
 
+func (method *Method) GetLineNumber(pc int) int {
+	if method.IsNative() {
+		return -2;
+	}
+	return method.lineNumberTable.GetLineNumber(pc)
+}
