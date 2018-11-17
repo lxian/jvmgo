@@ -5,21 +5,16 @@ import (
 	"jvmgo/instruction"
 	"jvmgo/instruction/factory"
 	"jvmgo/rtda"
-	"jvmgo/rtda/heap"
 	"strings"
 )
 
-func interpret(method *heap.Method, logInst bool) {
-	thread := rtda.NewThread()
-	frame := rtda.NewFrame(thread, method)
-	thread.PushFrame(frame)
-
-	defer func(frm *rtda.Frame) {
+func interpret(thread *rtda.Thread, logInst bool) {
+	defer func(thd *rtda.Thread) {
 		if r := recover(); r != nil {
-			logFrames(frm.Thread())
+			logFrames(thd)
 			panic(r)
 		}
-	}(frame)
+	}(thread)
 	loop(thread, logInst)
 }
 
