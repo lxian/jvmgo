@@ -37,6 +37,24 @@ func (thread *Thread) StackSize() uint {
 	return thread.stack.size
 }
 
+type StackIterator struct {
+	cur *Frame
+}
+
+func NewStackIterator(thread *Thread) *StackIterator {
+	return &StackIterator{cur: thread.stack._top}
+}
+
+func (it *StackIterator) HasNext() bool {
+	return it.cur != nil
+}
+
+func (it *StackIterator) Next() *Frame {
+	top := it.cur
+	it.cur = top.lower
+	return top
+}
+
 type Stack struct {
 	maxSize uint
 	size    uint

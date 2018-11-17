@@ -16,6 +16,9 @@ func newOperandStack(maxOperandStackSize uint) *OperandStack {
 
 func (stack *OperandStack) Clear() {
 	stack.size = 0
+	for _, slot := range stack.operands {
+		slot.ref = nil
+	}
 }
 
 // Slot

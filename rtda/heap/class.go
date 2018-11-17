@@ -3,7 +3,6 @@ package heap
 import (
 	"jvmgo/classfile"
 	"strings"
-	"golang.org/x/tools/go/analysis/passes/pkgfact/testdata/src/c"
 )
 
 type Class struct {
@@ -80,6 +79,10 @@ func (class *Class) InitStarted() bool {
 
 func (class *Class) Name() string {
 	return class.name
+}
+
+func (class *Class) JavaName() string {
+	return GetJavaClassName(class.name)
 }
 
 func (class *Class) Methods() []*Method {

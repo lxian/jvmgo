@@ -6,6 +6,10 @@ type Object struct {
 	extra interface{}
 }
 
+func (object *Object) SetExtra(extra interface{}) {
+	object.extra = extra
+}
+
 func (object *Object) Extra() interface{} {
 	return object.extra
 }
@@ -43,9 +47,11 @@ func (object *Object) SetRefVar(fieldName string, fieldDesc string, value *Objec
 }
 
 func (object *Object) GetRefVar(fieldName string, fieldDesc string) *Object {
-	for _, field := range object.Class().fields {
-		if !field.isStatic() && field.name == fieldName && field.descriptor == fieldDesc {
-			return object.Vars()[field.slotId].ref
+	for clz := object.Class(); clz != nil; clz = clz.SuperClass() {
+		for _, field := range clz.fields {
+			if !field.isStatic() && field.name == fieldName && field.descriptor == fieldDesc {
+				return object.Vars()[field.slotId].ref
+			}
 		}
 	}
 	return nil

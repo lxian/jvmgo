@@ -1,16 +1,19 @@
 package control
 
 import (
-	"fmt"
 	"jvmgo/instruction"
 	"jvmgo/rtda"
+	"jvmgo/native/java/lang"
+	"jvmgo/rtda/heap"
+	"fmt"
+	"os"
 )
 
 type ATHROW struct {
 	instruction.NoOperandsInstruction
 }
 
-func (*ATHROW) Execute(frame *rtda.Frame) {
+func (inst *ATHROW) Execute(frame *rtda.Frame) {
 
 	expObj := frame.OperandStack().PopRef()
 	if expObj == nil {
@@ -30,8 +33,15 @@ func (*ATHROW) Execute(frame *rtda.Frame) {
 		}
 
 		if thread.IsStackEmpty() {
-			fmt.Println("Cannnot handle the exception")
-			return // TODO print somehting
+			jMsg := expObj.GetRefVar("detailMessage", "Ljava/lang/String;")
+			goMsg := heap.GoString(jMsg)
+			fmt.Fprintln(os.Stderr, expObj.Class().JavaName() + ": " + goMsg)
+
+			traceEles := expObj.Extra().([]*lang.StackTraceElement)
+			for _, traceEl := range traceEles {
+				fmt.Fprintln(os.Stderr, "\tat " + traceEl.String())
+			}
+			return
 		}
 		thread.PopFrame()
 	}

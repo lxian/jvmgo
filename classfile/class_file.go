@@ -2,7 +2,6 @@ package classfile
 
 import (
 	"fmt"
-	"golang.org/x/tools/go/analysis/passes/pkgfact/testdata/src/c"
 )
 
 type ClassFile struct {

@@ -21,6 +21,7 @@ func InternedJString(gostr string, loader *ClassLoader) *Object {
 }
 
 func GoString(jstr *Object) string {
+	if jstr == nil { return ""}
 	return string(utf16.Decode(jstr.GetRefVar("value", "[C").Chars()))
 }
 

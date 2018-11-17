@@ -1,7 +1,5 @@
 package classfile
 
-import "golang.org/x/tools/go/analysis/passes/pkgfact/testdata/src/c"
-
 type ExceptionEntry struct {
 	startPc   uint16
 	endPc     uint16

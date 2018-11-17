@@ -23,7 +23,7 @@ func (attr *LineNumberTableAttribute) readInfo(reader *ClassReader) {
 
 func (table *LineNumberTableAttribute) GetLineNumber(pc int) int {
 	for _, e := range table.entries {
-		if int(e.startPc) == pc {
+		if int(e.startPc) >= pc {
 			return int(e.lineNumber)
 		}
 	}
