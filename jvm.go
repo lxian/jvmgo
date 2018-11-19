@@ -50,9 +50,22 @@ func (jvm *JVM) execMain() {
 
 	thread := jvm.mainThread
 	frame := rtda.NewFrame(thread, mainMethod)
+	args := jvm.createArgsArr()
+	frame.LocalVars().SetRef(0, args)
 	thread.PushFrame(frame)
 
 	interpret(thread, jvm.cmd.verboseInstFlag)
+}
+
+func (jvm *JVM) createArgsArr() *heap.Object {
+	stringClz := jvm.classLoader.LoadClass("java/lang/String")
+	args := stringClz.ArrayClass().NewArray(uint(len(jvm.cmd.args)))
+	argsArr := args.Refs()
+	for i, goArg := range jvm.cmd.args {
+		jstr := heap.JString(goArg, jvm.classLoader)
+		argsArr[i] = jstr
+	}
+	return args
 }
 
 func findMainMethod(class *heap.Class) *heap.Method {
